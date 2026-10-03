@@ -1,9 +1,5 @@
-"""Satu tempat untuk seluruh keterangan sumber data (soal poin 2b).
-
-Ubah TAHUN / AKSES di sini; semua tab ikut berubah.
-"""
 AKSES = "2 Oktober 2026"
-TAHUN = "2024"  # PERIKSA: samakan dengan tahun data pada tiap tabel BPS
+TAHUN = "2024"
 
 SUMBER = {
     "tpk": dict(
@@ -35,7 +31,6 @@ SUMBER = {
 
 
 def kutip(kunci, dengan_isi=False):
-    """Kalimat sumber (markdown): Sumber: BPS. Judul, tahun. URL (diakses ...)."""
     s = SUMBER[kunci]
     label = "tautan unduhan" if "web-api.bps.go.id" in s["url"] else s["url"]
     awal = f"**{s['isi']}.** " if dengan_isi else ""

@@ -13,13 +13,12 @@ LOGO = ROOT / "assets" / "logo-kelapa.png"
 st.set_page_config(page_title="Pariwisata Indonesia · Dasbor Visualisasi BPS",
                    page_icon=str(ICON) if ICON.exists() else "🥥", layout="wide")
 
-from theme import brand_bar, data_uri, inject_theme  # noqa: E402
-from tabs import beranda, flow, hierarki, multivariat  # noqa: E402
+from theme import brand_bar, data_uri, inject_theme
+from tabs import beranda, flow, hierarki, multivariat
 
 
 @st.cache_data
 def load(name: str) -> pd.DataFrame:
-    """Baca CSV dari data/processed, fallback ke data/raw."""
     for folder in ("processed", "raw"):
         p = ROOT / "data" / folder / name
         if p.exists():
@@ -30,7 +29,6 @@ def load(name: str) -> pd.DataFrame:
 
 @st.cache_data
 def load_sheet(sheet: str) -> pd.DataFrame:
-    """Baca satu sheet dari Data_Visdat.xlsx (data/raw, fallback data/processed)."""
     for folder in ("raw", "processed"):
         p = ROOT / "data" / folder / "Data_Visdat.xlsx"
         if p.exists():

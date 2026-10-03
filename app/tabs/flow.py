@@ -12,25 +12,18 @@ from sumber import kutip
 from theme import (card, chapter, chips, hero, inject_theme, insight, kpi_card, panel,
                    polish, story_nav)
 
-# Topik  : Visualisasi data aliran (flow) -- Lampiran A
-# Teknik : Sankey, matriks OD (heatmap), chord diagram
-# Sumber : BPS
-# Data   : Data_Visdat.xlsx, sheet "Flow" (mancanegara, data mentah) dan chord.csv (nusantara)
 
 HTML_PATH = Path(__file__).parent / "chord.html"
 
 SEMUA = "(Semua provinsi)"
 ALIAS_PROV = {"NTT": "Nusa Tenggara Timur", "NTB": "Nusa Tenggara Barat", "DIY": "DI Yogyakarta",
               "Kep. Riau": "Kepulauan Riau", "DK Jakarta": "DKI Jakarta"}
-# Tujuan tanpa provinsi pada data BPS (label dwibahasa dipangkas ke bahasa Indonesia)
 TUJUAN_KHUSUS = {"Perbatasan Laut Sea Border": "Perbatasan laut",
                  "Perbatasan Darat Land Border": "Perbatasan darat",
                  "Lainnya Others": "Pintu lainnya"}
-# salah ketik pada data sumber
 KOREKSI_PINTU = {"Sam Ratalungi": "Sam Ratulangi", "Hassanudin": "Hasanuddin"}
 LEVEL_PINTU, LEVEL_PROV = "Pintu masuk", "Provinsi"
 
-# Palet Okabe-Ito (ramah buta warna)
 BLUE, ORANGE, VERM, GREY = "#0072B2", "#E69F00", "#D55E00", "#A0A0A0"
 GREEN, PINK = "#009E73", "#CC79A7"
 
@@ -60,7 +53,6 @@ REGION_COLOR = {
 }
 
 
-# ======================= HELPER =======================
 def fmt_id(n) -> str:
     return f"{n:,.0f}".replace(",", ".")
 
@@ -76,7 +68,6 @@ def compact(v) -> str:
 
 
 def judul(teks, sub):
-    """Judul di dalam gambar: judul tebal + satuan + 'Sumber: BPS' (soal poin 2b dan 4b)."""
     return dict(text=f"<b>{teks}</b><br><sup>{sub} · Sumber: BPS</sup>", x=0.01, xanchor="left")
 
 
@@ -90,30 +81,16 @@ def kpi(col, label, value, sub="", color=BLUE):
 
 
 def show(fig):
-    """Tampilkan grafik Plotly dengan gaya seragam."""
     st.plotly_chart(polish(fig), width="stretch", config=PLOT_CFG)
 
 
-# ======================= PRA-PEMROSESAN (data mentah sheet Flow) =======================
 @st.cache_data
 def prep_manca(raw: pd.DataFrame):
-    """Bersihkan sheet Flow (kolom 1-3: Asal, Tujuan/Pintu Kedatangan, Value).
-
-    1. Asal dwibahasa ("Singapura/Singapore") -> ambil nama Indonesia (sebelum "/").
-    2. Tujuan "Nama pintu, Provinsi" (spasi setelah koma tidak konsisten) -> Pintu dan Provinsi;
-       singkatan (NTT, NTB, DIY, Kep. Riau, DK Jakarta) disamakan dengan chord.csv.
-       "Perbatasan Laut/Darat" dan "Lainnya" tidak punya provinsi -> dijadikan tujuan tersendiri.
-    3. Baris ganda (asal, tujuan sama; mis. beberapa baris "Lainnya") dijumlahkan.
-    4. Nilai kosong atau "—" berarti tidak ada kunjungan -> dibaca sebagai 0 (total tidak berubah).
-       Nol tetap tampil di matriks OD, tetapi tidak digambar sebagai pita di Sankey.
-    5. Asal berakhiran 'Lainnya' (mis. Asean Lainnya) ditandai sebagai kelompok, bukan negara.
-    Mengembalikan (data bersih, jumlah pasangan asal-tujuan bernilai 0).
-    """
     d = raw.iloc[:, :3].copy()
     d.columns = ["Asal", "Tujuan", "Value"]
     d["Asal"] = d["Asal"].astype(str).str.split("/").str[0].str.strip()
     d["Tujuan"] = d["Tujuan"].astype(str).str.replace(r"\s+", " ", regex=True).str.strip()
-    d["Value"] = pd.to_numeric(d["Value"], errors="coerce").fillna(0)  # "—"/kosong = 0 kunjungan
+    d["Value"] = pd.to_numeric(d["Value"], errors="coerce").fillna(0)
 
     khusus = d["Tujuan"].isin(TUJUAN_KHUSUS)
     pecah = d["Tujuan"].str.rsplit(",", n=1, expand=True)
@@ -121,7 +98,7 @@ def prep_manca(raw: pd.DataFrame):
     prov_raw = pecah[1].fillna("").str.strip()
     d["Pintu"] = np.where(khusus, d["Tujuan"].map(TUJUAN_KHUSUS), pintu)
     d["Provinsi"] = np.where(khusus, d["Tujuan"].map(TUJUAN_KHUSUS), prov_raw.replace(ALIAS_PROV))
-    d["Tujuan"] = np.where(khusus, d["Pintu"], pintu + ", " + prov_raw)  # label pendek untuk grafik
+    d["Tujuan"] = np.where(khusus, d["Pintu"], pintu + ", " + prov_raw)
 
     d = d.groupby(["Asal", "Tujuan", "Pintu", "Provinsi"], as_index=False)["Value"].sum()
     n_kosong = int((d["Value"] == 0).sum())
@@ -130,9 +107,7 @@ def prep_manca(raw: pd.DataFrame):
     return d.reset_index(drop=True), n_kosong
 
 
-# ======================= SANKEY =======================
 def sankey(df: pd.DataFrame, focus_t=()) -> go.Figure:
-    """df: Source, Target, Value. focus_t: node tujuan yang disorot (provinsi fokus)."""
     focus_t = set(focus_t)
     srcs = df.groupby("Source")["Value"].sum().sort_values(ascending=False).index.tolist()
     tgts = df.groupby("Target")["Value"].sum().sort_values(ascending=False).index.tolist()
@@ -166,9 +141,7 @@ def sankey(df: pd.DataFrame, focus_t=()) -> go.Figure:
     return fig
 
 
-# ======================= MATRIKS OD (HEATMAP) =======================
 def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
-    """df: X (tujuan), Y (negara asal), Value, Rank. Nilai 0 = tidak ada kunjungan."""
     val = df.pivot_table(index="Y", columns="X", values="Value", aggfunc="sum")
     rnk = df.pivot_table(index="Y", columns="X", values="Rank", aggfunc="min")
     rows = val.sum(axis=1).sort_values(ascending=False).index
@@ -176,7 +149,6 @@ def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
     val, rnk = val.loc[rows, cols], rnk.loc[rows, cols]
 
     z = np.log10(val.clip(lower=1)) if log else val
-    # label kolom dipendekkan (tanpa nama provinsi) agar ruang tersisa untuk matriks; hover tetap lengkap
     short = [str(c).rsplit(",", 1)[0].strip() for c in cols]
     if len(set(short)) < len(short):
         short = [str(c) for c in cols]
@@ -212,7 +184,6 @@ def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
     return fig
 
 
-# ======================= CHORD =======================
 def pick_nodes(df, top_n, include_self, focus):
     d = df if include_self else df[df["Asal"] != df["Tujuan"]]
     if focus:
@@ -286,12 +257,7 @@ def top_pairs_bar(df, focus, n=10) -> go.Figure:
     return fig
 
 
-
-
-# ======================= KPI =======================
 def kpi_row(a, c, focus, total_all):
-    """a: agregat mancanegara (Asal, Provinsi, Value) sesuai filter; c: data chord;
-    total_all: total kunjungan seluruh data (tanpa filter)."""
     by_prov = a.groupby("Provinsi")["Value"].sum().sort_values(ascending=False)
     by_cty = a.groupby("Asal")["Value"].sum().sort_values(ascending=False)
     nonself = c[c["Asal"] != c["Tujuan"]]
@@ -323,7 +289,6 @@ def kpi_row(a, c, focus, total_all):
             "perjalanan antarprovinsi", PINK)
 
 
-# ======================= RENDER =======================
 def render(load, load_sheet):
     m, n_kosong = prep_manca(load_sheet("Flow"))
     c = load("chord.csv")
@@ -333,7 +298,6 @@ def render(load, load_sheet):
     prov_all = sorted(c["Asal"].unique())
     pintu_all = m.groupby("Tujuan")["Value"].sum().sort_values(ascending=False).index.tolist()
 
-    # ---------- angka untuk narasi ----------
     neg = m[m["Kategori"] == "Negara"]
     by_cty = neg.groupby("Asal")["Value"].sum().sort_values(ascending=False)
     by_pintu = m.groupby("Tujuan")["Value"].sum().sort_values(ascending=False)
@@ -341,7 +305,6 @@ def render(load, load_sheet):
     nonself = c[c["Asal"] != c["Tujuan"]]
     self_share = c.loc[c["Asal"] == c["Tujuan"], "Value"].sum() / c["Value"].sum()
 
-    # =============== HERO + NAVIGASI BAB ===============
     hero("",
          "Pola <em>aliran</em> wisatawan di Indonesia",
          f"Data BPS mencatat {compact(total_m)} kunjungan wisatawan mancanegara dari {by_cty.size} negara melalui "
@@ -352,7 +315,6 @@ def render(load, load_sheet):
     story_nav([("bab-1", "1 · Asal wisatawan mancanegara"), ("bab-2", "2 · Pasangan asal-tujuan"),
                ("bab-3", "3 · Perjalanan antarprovinsi")])
 
-    # =============== FILTER BERSAMA ===============
     box = panel("filter", "Filter bersama: Sankey, Matriks OD, dan KPI")
     with box:
         f1, f2, f3 = st.columns([3, 3, 3])
@@ -394,7 +356,6 @@ def render(load, load_sheet):
         st.info(f"{focus} bukan lokasi pintu kedatangan mancanegara pada data; "
                 "sorotan hanya berlaku pada chord.")
 
-    # ---------- terapkan filter pada data mentah ----------
     d = pool if not negara_pilih else pool[pool["Asal"].isin(negara_pilih)]
     d = d.assign(T=d["Tujuan"] if level == LEVEL_PINTU else d["Provinsi"])
     if pintu_pilih:
@@ -412,7 +373,6 @@ def render(load, load_sheet):
     st.write("")
     kpi_row(agg, c, focus, total_m)
 
-    # =============== BAB 1 · SANKEY ===============
     chapter(1, "bab-1", "Sankey", "Dari mana wisatawan mancanegara datang?",
             f"Kunjungan terkonsentrasi pada sejumlah kecil negara asal dan pintu kedatangan. "
             f"<b>{esc(by_cty.index[0])}</b> merupakan negara asal terbesar ({by_cty.iloc[0] / by_cty.sum():.0%} "
@@ -439,7 +399,6 @@ def render(load, load_sheet):
         insight(f"Rute dengan kunjungan terbesar adalah <b>{esc(t1.Source)} → {esc(t1.Target)}</b> "
                 f"({fmt_id(t1.Value)} kunjungan). Tujuan <b>{esc(by_p.index[0])}</b> menerima "
                 f"{by_p.iloc[0] / by_p.sum():.0%} dari seluruh kunjungan pada filter yang dipilih.")
-    # =============== BAB 2 · MATRIKS OD ===============
     chapter(2, "bab-2", "Matriks OD", "Pasangan asal-tujuan mana yang paling dominan?",
             "Sankey menampilkan aliran terbesar, sedangkan matriks asal-tujuan (OD) memperlihatkan seluruh "
             "pasangan, termasuk pasangan dengan kunjungan sangat rendah. Sel yang lebih terang menunjukkan "
@@ -466,7 +425,6 @@ def render(load, load_sheet):
         insight(f"Pasangan terbesar adalah <b>{esc(tp['Asal'])} → {esc(tp['T'])}</b> ({fmt_id(tp['Value'])} kunjungan). "
                 f"Lima pasangan teratas menyumbang <b>{sh5:.0%}</b> dari seluruh kunjungan pada filter ini, "
                 f"sedangkan {n0} pasangan tidak mencatat kunjungan sama sekali.")
-    # =============== BAB 3 · CHORD ===============
     chapter(3, "bab-3", "Chord", "Bagaimana pola perjalanan wisatawan antarprovinsi?",
             f"Sebesar <b>{self_share:.0%}</b> perjalanan wisatawan nusantara berlangsung di dalam provinsi yang "
             "sama. Perjalanan dalam provinsi dikeluarkan secara bawaan agar keterkaitan antarprovinsi dapat "
@@ -492,7 +450,6 @@ def render(load, load_sheet):
 
     insight(f"Perjalanan dalam provinsi mencapai <b>{self_share:.0%}</b> dari seluruh perjalanan "
             "wisatawan nusantara, sehingga dikeluarkan secara bawaan agar aliran antarprovinsi dapat diamati.")
-    # =============== SUMBER DATA ===============
     st.write("")
     with st.expander("Sumber data"):
         st.markdown("- " + kutip("manca", True))

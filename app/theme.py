@@ -1,7 +1,3 @@
-"""Tema visual dasbor: CSS global + komponen bercerita (hero, bab, kartu, KPI, insight).
-
-Dipakai bersama oleh semua tab:  from theme import inject_theme, hero, chapter, card, ...
-"""
 import base64
 import mimetypes
 from functools import lru_cache
@@ -28,7 +24,6 @@ footer,#MainMenu{visibility:hidden}
 html,[data-testid="stMain"]{scroll-behavior:smooth}
 [data-testid="stMain"]{scroll-snap-type:y proximity}
 
-/* ---------- brand bar + tab pill ---------- */
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;color:var(--ink);margin:2px 0 10px}
 .brand .dot{width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,#0072B2,#E69F00)}
 .brand .tag{margin-left:auto;font-size:.72rem;font-weight:600;color:var(--muted);border:1px solid var(--line);
@@ -48,14 +43,12 @@ button[data-baseweb="tab"][aria-selected="true"]{background:linear-gradient(135d
 button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
 .react-aria-SelectionIndicator,div[data-baseweb="tab-highlight"],div[data-baseweb="tab-border"]{display:none!important}
 
-/* ---------- navigasi bab ---------- */
 .nav{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 6px}
 .nav a{text-decoration:none;color:var(--ink);font-weight:700;font-size:.92rem;background:#fff;
   border:1px solid var(--line);border-radius:999px;padding:9px 20px;transition:all .2s;
   box-shadow:0 8px 20px -12px rgba(15,23,42,.35)}
 .nav a:hover{background:var(--ink);color:#fff;transform:translateY(-1px)}
 
-/* ---------- bab (chapter) ---------- */
 .ch{display:flex;gap:16px;align-items:flex-start;margin:26px 0 6px;scroll-margin-top:12px;scroll-snap-align:start}
 .ch-no{flex:0 0 auto;font-size:3.6rem;font-weight:800;line-height:.9;letter-spacing:-2px;
   background:linear-gradient(160deg,var(--c),transparent 125%);-webkit-background-clip:text;
@@ -64,7 +57,6 @@ button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
 .ch h2{margin:0;padding:0;font-size:1.75rem;letter-spacing:-.02em;font-weight:800;line-height:1.15;color:var(--ink)}
 .ch p{margin:4px 0 0;max-width:980px;font-size:.93rem;line-height:1.5;color:#475569}
 
-/* ---------- kartu ---------- */
 [class*="st-key-card_"]{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px 14px 4px;
   box-shadow:0 1px 2px rgba(15,23,42,.04),0 16px 36px -16px rgba(15,23,42,.16);transition:box-shadow .25s,transform .25s}
 [class*="st-key-card_"]:hover{box-shadow:0 1px 2px rgba(15,23,42,.05),0 22px 44px -14px rgba(15,23,42,.22)}
@@ -73,7 +65,6 @@ button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
 .panel-t{font-weight:800;font-size:.95rem;color:var(--ink);margin-bottom:2px}
 [data-testid="stExpander"]{border:1px solid var(--line);border-radius:16px;background:#fff}
 
-/* ---------- KPI ---------- */
 .kpi{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:20px;
   padding:14px 16px;height:100%;box-shadow:0 12px 28px -18px rgba(15,23,42,.25);transition:transform .2s}
 .kpi:hover{transform:translateY(-3px)}
@@ -88,7 +79,6 @@ button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
 .tile b i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px}
 .tile small{color:var(--muted);font-size:.74rem;line-height:1.3;display:block;margin-top:2px}
 
-/* ---------- chip + insight ---------- */
 .chip{display:inline-flex;align-items:center;gap:7px;background:#F1F5F9;border-radius:999px;
   padding:4px 12px;margin:2px 6px 2px 0;font-size:.82rem;font-weight:600;color:#334155;white-space:nowrap}
 .chip i{display:inline-block;width:11px;height:11px;border-radius:50%}
@@ -97,14 +87,12 @@ button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
 .insight .ic{font-size:1.3rem;line-height:1.3}
 .insight b.h{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#B45309;margin-bottom:2px}
 
-/* ---------- animasi muncul saat di-scroll (tanpa JS) ---------- */
 @keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
 @supports (animation-timeline:view()){
   .ch,.insight,[class*="st-key-card_"]{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}
 @supports not (animation-timeline:view()){
   .ch,.insight,[class*="st-key-card_"]{animation:rise .7s ease both}}
 
-/* ---------- logo, judul seksi, langkah, footer (Beranda) ---------- */
 .brand img.logo{height:52px;width:auto;display:block}
 .sec{margin:54px 0 16px;scroll-margin-top:70px}
 .sec .eb{font-size:.78rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#0072B2;margin-bottom:4px}
@@ -183,7 +171,6 @@ def inject_theme():
 
 @lru_cache(maxsize=None)
 def data_uri(path):
-    """Gambar lokal -> data URI (aman dipakai di markdown maupun iframe). None bila berkas tidak ada."""
     p = Path(path)
     if not p.exists():
         return None
@@ -192,15 +179,13 @@ def data_uri(path):
 
 
 def brand_bar(nama="Pariwisata Indonesia", tag="Sumber: BPS", logo=None):
-    """logo: data URI (lihat data_uri). Tanpa logo -> titik gradasi."""
     mark = f'<img class="logo" src="{logo}" alt="Logo {esc(nama)}">' if logo else '<span class="dot"></span>'
-    teks = "" if logo else esc(nama)   # logo sudah memuat nama; hindari teks ganda
+    teks = "" if logo else esc(nama)
     st.markdown(f'<div class="brand">{mark}{teks}'
                 f'<span class="tag">{esc(tag)}</span></div>', unsafe_allow_html=True)
 
 
 def section_title(eyebrow, title, lead="", anchor=""):
-    """Judul seksi tanpa nomor bab (untuk Beranda)."""
     a = f' id="{anchor}"' if anchor else ""
     p = f"<p>{lead}</p>" if lead else ""
     st.markdown(f'<div class="sec"{a}><div class="eb">{esc(eyebrow)}</div><h2>{esc(title)}</h2>{p}</div>',
@@ -208,7 +193,6 @@ def section_title(eyebrow, title, lead="", anchor=""):
 
 
 def skala(v):
-    """Angka -> (nilai, desimal, akhiran) untuk animasi penghitung."""
     if v >= 1e9:
         return v / 1e9, 1, " miliar"
     if v >= 1e6:
@@ -217,7 +201,6 @@ def skala(v):
 
 
 def hero(eyebrow, title, lead, stats, height=400):
-    """stats: [(angka_mentah, label)]. Judul boleh memakai <em> untuk kata beraksen."""
     cells = ""
     for v, label in stats:
         n, dec, suf = skala(v)
@@ -229,7 +212,6 @@ def hero(eyebrow, title, lead, stats, height=400):
 
 
 def story_nav(items):
-    """items: [(anchor, label)] -> pil navigasi lompat ke bab."""
     st.markdown('<div class="nav">' + "".join(f'<a href="#{a}">{esc(t)}</a>' for a, t in items) + "</div>",
                 unsafe_allow_html=True)
 
@@ -260,7 +242,6 @@ def kpi_card(col, ikon, label, value, sub, color):
 
 
 def chips(items):
-    """items: [(warna atau None, label)]"""
     st.markdown("".join('<span class="chip">' + (f'<i style="background:{c}"></i>' if c else "") + esc(t)
                         + "</span>" for c, t in items), unsafe_allow_html=True)
 
@@ -271,7 +252,6 @@ def insight(teks):
 
 
 def polish(fig):
-    """Samakan gaya Plotly: font, latar transparan, tooltip gelap."""
     fig.update_layout(
         font=dict(family=FONT_PLOT, color="#0F172A"), paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)", title_font=dict(size=15),

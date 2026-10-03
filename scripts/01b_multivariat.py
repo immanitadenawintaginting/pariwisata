@@ -1,8 +1,3 @@
-"""Pra-pemrosesan tab Multivariat -> data/processed/multivariat_provinsi.csv
-Jalankan dari akar proyek: python scripts/01b_multivariat.py
-Sumber : sheet 'GeoNMulti' pada Data_Visdat*.xlsx (data/raw/), bersumber dari BPS.
-Keluaran: Provinsi, Wilayah, dan 10 variabel numerik (Bintang & Non-Bintang).
-"""
 from pathlib import Path
 
 import pandas as pd
@@ -18,11 +13,9 @@ VARIABEL = [
     "TempatTidur_Bintang", "TempatTidur_NonBintang",
     "LamaInap_Bintang", "LamaInap_NonBintang",
 ]
-# Nama kolom di Excel -> nama kolom kontrak
 RENAME = {"LamaMenginap_Bintang": "LamaInap_Bintang",
           "LamaMenginap_NonBintang": "LamaInap_NonBintang"}
 
-# Pengelompokan wilayah (untuk pewarnaan; dipakai sebagai pembanding klaster)
 WILAYAH = {
     "Sumatera": ["Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi",
                  "Sumatera Selatan", "Bengkulu", "Lampung",

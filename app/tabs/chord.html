@@ -33,7 +33,7 @@
 </div>
 
 <script>
-const D = __DATA__;           // disuntikkan dari flow.py
+const D = __DATA__;
 const fmt = new Intl.NumberFormat("id-ID");
 
 d3.select("#legend").selectAll("div").data(D.legend).join("div")
@@ -60,7 +60,6 @@ function showTip(html, ev) {
 }
 const hideTip = () => tip.style("opacity", 0);
 
-// ---------- pita ----------
 const rib = svg.append("g").attr("fill-opacity", 0.72)
   .selectAll("path").data(chords).join("path")
     .attr("class", "rib")
@@ -74,7 +73,6 @@ const rib = svg.append("g").attr("fill-opacity", 0.72)
     })
     .on("mouseleave", () => { hideTip(); restore(); });
 
-// ---------- busur provinsi ----------
 let pinned = null;
 function highlight(i) {
   rib.attr("fill-opacity", d => (i === null || d.source.index === i || d.target.index === i) ? 0.85 : 0.04);
@@ -109,13 +107,16 @@ grp.append("text")
   .attr("text-anchor", d => d.angle > Math.PI ? "end" : "start")
   .text(d => D.names[d.index]);
 
-// viewBox disesuaikan dengan isi (lingkaran + label) agar chord sebesar mungkin dan label tidak terpotong
 function fitView() {
-  const b = svg.node().getBBox(), p = 10;
+  const node = svg.node();
+  if (!node.clientWidth || !node.clientHeight) return;
+  const b = node.getBBox(), p = 10;
+  if (b.width < 2 * R + 40 || b.height < 2 * R) return;
   svg.attr("viewBox", `${b.x - p} ${b.y - p} ${b.width + 2 * p} ${b.height + 2 * p}`);
 }
 fitView();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitView);
+new ResizeObserver(fitView).observe(document.getElementById("chart"));
 d3.select("#wrap").append("div").attr("class", "src").style("text-align", "center").text("Sumber: BPS");
 </script>
 </body>

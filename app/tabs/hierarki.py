@@ -1,13 +1,3 @@
-"""Tab Hierarki -- UAS Visdat 2026 (Lampiran A: data berhierarki).
-
-Hierarki 1 (akomodasi): Indonesia > Pulau > Provinsi > Jenis akomodasi (Bintang / Non-Bintang)
-    ukuran = jumlah kamar | akomodasi | tempat tidur (aditif -> induk = jumlah anak)
-    warna  = TPK (%) atau rata-rata lama menginap (hari)      -> Treemap + Sunburst
-Hierarki 2 (wisatawan): Indonesia > Pulau > Provinsi > Jenis kelamin
-    ukuran = jumlah perjalanan wisatawan nusantara, warna = % perempuan -> Icicle
-Interaksi: filter Pulau/Provinsi, slider kedalaman, klik drill-down + breadcrumb, tooltip.
-Data   : Data_Visdat.xlsx, sheet "GeoNMulti" (BPS)
-"""
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -32,20 +22,17 @@ PULAU = {
 PULAU_DARI = {p: pulau for pulau, ps in PULAU.items() for p in ps}
 ROOT = "Indonesia"
 
-UKURAN = {  # label -> (kolom, satuan)
+UKURAN = {
     "Jumlah kamar": ("Kamar", "kamar"),
     "Jumlah akomodasi": ("Akomodasi", "usaha"),
     "Jumlah tempat tidur": ("TempatTidur", "tempat tidur"),
 }
-WARNA = {  # label -> (kolom, format)
+WARNA = {
     "TPK (%)": ("TPK", ".1f"),
     "Rata-rata lama menginap (hari)": ("Lama", ".2f"),
 }
 
 
-# ----------------------------------------------------------------------
-# Data
-# ----------------------------------------------------------------------
 @st.cache_data
 def siapkan(_load_sheet):
     geo = _load_sheet("GeoNMulti").copy()
@@ -73,8 +60,6 @@ def siapkan(_load_sheet):
 
 
 def bangun_node(d, levels, fmt_teks, hover_leaf, hover_parent):
-    """Tabel node Plotly. Induk = jumlah anak (branchvalues='total');
-    warna induk = rata-rata terbobot ukuran."""
     d = d.copy()
     d["_w"] = d["Warna"] * d["Ukuran"]
     rows = [dict(id=ROOT, label=ROOT, parent="", path=ROOT, Ukuran=d["Ukuran"].sum(),
@@ -113,7 +98,6 @@ def gambar(jenis, n, skala, warna_label, cmin, cmax, judul, ukuran_label, maxdep
     elif jenis == "Sunburst":
         tr = go.Sunburst(insidetextorientation="radial", **kw)
     else:
-        # vertikal: akar di atas, level turun ke bawah, daun berjajar mendatar (lebih lebar daripada versi horizontal)
         tr = go.Icicle(tiling=dict(orientation="v", pad=2), pathbar=dict(visible=True, thickness=22), **kw)
     fig = go.Figure(tr)
     fig.update_layout(
@@ -126,9 +110,6 @@ def gambar(jenis, n, skala, warna_label, cmin, cmax, judul, ukuran_label, maxdep
     return polish(fig)
 
 
-# ----------------------------------------------------------------------
-# UI
-# ----------------------------------------------------------------------
 IKON = {"#0072B2": "🏨", "#009E73": "⭐", "#E69F00": "🏠", "#CC79A7": "🧳", "#D55E00": "🔝"}
 
 
@@ -177,7 +158,6 @@ def _bagian_akomodasi(akom, d_sel, depth):
         st.plotly_chart(gambar("Sunburst", n, "Viridis", w_label, cmin, cmax, judul, u_label, depth, 400),
                         width="stretch")
 
-    # ---- temuan (seluruh Indonesia)
     b, nb = akom[akom["Jenis"] == "Bintang"], akom[akom["Jenis"] == "Non-Bintang"]
     tpk_b = (b["TPK"] * b["Kamar"]).sum() / b["Kamar"].sum()
     tpk_n = (nb["TPK"] * nb["Kamar"]).sum() / nb["Kamar"].sum()
@@ -223,7 +203,7 @@ def _bagian_gender(gender, d_sel, depth):
         d, ["Pulau", "Provinsi", "JK"], fmt_teks=lambda u: f"{u / 1e6:,.2f} jt",
         hover_leaf=lambda u, w: f"Perjalanan: <b>{u:,.0f}</b><br>% {kata} di provinsi: {w:.1f}%",
         hover_parent=lambda u, w: f"Perjalanan: <b>{u:,.0f}</b><br>% {kata} (terbobot): {w:.1f}%")
-    h = 560  # icicle vertikal: butuh tinggi agar level 3-4 terbaca
+    h = 560
     ket = "" if jk == "Semua" else f" ({kata})"
     with card("icicle"):
         st.plotly_chart(gambar("Icicle", n, "Cividis", w_label, cmin, cmax,

@@ -1,15 +1,3 @@
-"""Tab Multivariat: profil akomodasi 38 provinsi (10 variabel inti + 2 opsional).
-
-Topik  : Visualisasi data berdimensi tinggi (Lampiran A)
-Data   : Data_Visdat.xlsx, sheet "GeoNMulti" (38 provinsi). Sumber: BPS
-Teknik : (1) reduksi dimensi: PCA (biplot)
-         (2) parallel coordinates   (3) scatterplot matrix   (4) radar chart profil klaster
-Linking: seleksi pada biplot / scatterplot matrix / parallel coordinates menyorot provinsi
-         yang sama di semua tampilan (diimplementasikan di multivariat.html agar mulus
-         tanpa memuat ulang halaman).
-Interpretasi: klaster (K-Means) diberi nama otomatis dari profil z-score; pencilan dideteksi
-         dengan jarak Mahalanobis pada komponen utama.
-"""
 import json
 from html import escape as esc
 from pathlib import Path
@@ -28,12 +16,10 @@ from sklearn.preprocessing import StandardScaler
 from sumber import kutip
 from theme import card, chapter, hero, inject_theme, insight, kpi_card, panel, polish, story_nav
 
-from .flow import REGION_COLOR, REGION_OF, REGION_ORDER  # satu sumber pemetaan wilayah dengan tab Flow
+from .flow import REGION_COLOR, REGION_OF, REGION_ORDER
 
 HTML_PATH = Path(__file__).parent / "multivariat.html"
 
-# ---------------------------------------------------------------- nama & satuan variabel
-# Bintang = hotel berbintang; Non-bintang = hotel non-bintang dan akomodasi lainnya (klasifikasi BPS).
 METRIK = {
     "TPK": dict(nama="TPK", pendek="TPK", satuan="%", log=False, tema="hunian"),
     "Akomodasi": dict(nama="Jumlah akomodasi", pendek="Akomodasi", satuan="unit", log=True, tema="skala"),
@@ -49,14 +35,13 @@ EXTRA = {
     "Pct_Perempuan": dict(nama="Wisatawan perempuan", pendek="Wisatawan perempuan", satuan="%",
                           log=False, tema="lain"),
 }
-# nama kolom di sheet GeoNMulti -> nama yang dipakai kode
 RENAME = {
     "LamaMenginap_Bintang": "LamaInap_Bintang", "LamaMenginap_NonBintang": "LamaInap_NonBintang",
     "JumlahWisatawanTujuan": "Wisatawan_Tujuan", "Perempuan": "Pct_Perempuan",
 }
 SPLOM_DEFAULT = ["TPK_Bintang", "TPK_NonBintang", "Kamar_Bintang", "Akomodasi_NonBintang", "LamaInap_Bintang"]
 
-PALET = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00"]  # Okabe-Ito
+PALET = ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00"]
 ABU = "#B8B8B8"
 
 
@@ -68,7 +53,6 @@ def _meta(v):
 
 
 def label(v, mode="full"):
-    """full: 'TPK bintang (%)' | short: 'TPK bintang' | axis: 'TPK<br>bintang'."""
     m, j = _meta(v)
     if mode == "axis":
         return f"{m['pendek']}<br>{j}" if j else m["pendek"].replace(" ", "<br>", 1)
@@ -87,7 +71,6 @@ def fmt_val(v, x):
     return fmt(x, 2 if m["satuan"] in ("%", "malam") else 0)
 
 
-# ---------------------------------------------------------------- data
 @st.cache_data
 def _muat(raw: pd.DataFrame) -> pd.DataFrame:
     d = raw.loc[:, ~raw.columns.astype(str).str.startswith("Unnamed")].copy()
@@ -112,12 +95,12 @@ def _analisis(X: pd.DataFrame, k: int):
     pca = PCA().fit(Z)
     skor = pca.transform(Z)
     komp = pca.components_.copy()
-    for c in range(2):                      # tanda PC dibuat stabil: jumlah loading positif
+    for c in range(2):
         if komp[c].sum() < 0:
             komp[c] *= -1
             skor[:, c] *= -1
     km = KMeans(n_clusters=k, n_init=10, random_state=42).fit(Z)
-    urut = np.argsort([Z[km.labels_ == c].mean() for c in range(k)])   # klaster 1 = skor rata-rata terendah
+    urut = np.argsort([Z[km.labels_ == c].mean() for c in range(k)])
     peta = {old: new for new, old in enumerate(urut)}
     klaster = np.array([peta[c] for c in km.labels_])
     sil = float(silhouette_score(Z, klaster))
@@ -129,7 +112,6 @@ def _analisis(X: pd.DataFrame, k: int):
 
 
 def _nama_klaster(Z, klaster, vars_, k):
-    """Nama deskriptif dari profil z-score: skala akomodasi dan kinerja hunian."""
     tema = np.array([_meta(v)[0]["tema"] for v in vars_])
     nama = []
     for c in range(k):
@@ -143,7 +125,6 @@ def _nama_klaster(Z, klaster, vars_, k):
     return nama
 
 
-# ---------------------------------------------------------------- payload untuk multivariat.html
 def _ticks_log(lo, hi):
     tv, tt = [], []
     for e in range(int(np.floor(lo)) - 1, int(np.ceil(hi)) + 1):
@@ -156,20 +137,12 @@ def _ticks_log(lo, hi):
 
 
 def _tema():
-    try:
-        dark = st.context.theme.type == "dark"
-    except Exception:
-        dark = False
-    if dark:
-        return dict(fg="#E8EAF0", muted="#A0A6B5", line="rgba(160,166,181,.35)", grid="#3A3F4B",
-                    zero="#5A6070", bg="#0E1117", bgA="rgba(14,17,23,.75)", arrow="#C9CEDA", grey="#5E6573")
     return dict(fg="#0F172A", muted="#64748B", line="rgba(128,128,128,.30)", grid="#E6E8EC",
                 zero="#B8BDC7", bg="#FFFFFF", bgA="rgba(255,255,255,.75)", arrow="#444B5A", grey="#C4C8D0")
 
 
 def _payload(df, X, A, vars_, splom, k, nama_k, outlier, log):
     n = len(df)
-    # --- embedding PCA + loading
     sk, L = A["skor"][:, :2], A["komp"][:2].T
     ext = np.quantile(np.hypot(sk[:, 0], sk[:, 1]), 0.85)
     s = ext / np.hypot(L[:, 0], L[:, 1]).max()
@@ -178,14 +151,12 @@ def _payload(df, X, A, vars_, splom, k, nama_k, outlier, log):
                xt=f"PC1 ({fmt(ev[0], 1)}%)", yt=f"PC2 ({fmt(ev[1], 1)}%)",
                loadings=[dict(lab=label(v, "short"), x=round(float(L[i, 0] * s), 3), y=round(float(L[i, 1] * s), 3))
                          for i, v in enumerate(vars_)])
-    # --- pewarnaan
     wil = [w for w in REGION_ORDER if (df.Wilayah == w).any()]
     col = {
         "Klaster": dict(names=nama_k, colors=PALET[:k], idx=A["klaster"].tolist()),
         "Wilayah": dict(names=wil, colors=[REGION_COLOR[w] for w in wil],
                         idx=df.Wilayah.map({w: i for i, w in enumerate(wil)}).tolist()),
     }
-    # --- variabel
     vs = []
     for v in vars_:
         m, _ = _meta(v)
@@ -199,7 +170,6 @@ def _payload(df, X, A, vars_, splom, k, nama_k, outlier, log):
         if d["log"]:
             d["tv"], d["tt"] = _ticks_log(lo, hi)
         vs.append(d)
-    # --- tooltip
     hover = []
     for i in range(n):
         baris = [f"<b>{esc(df.Provinsi[i])}</b>", f"{esc(df.Wilayah[i])} · {esc(nama_k[A['klaster'][i]])}"]
@@ -213,7 +183,6 @@ def _payload(df, X, A, vars_, splom, k, nama_k, outlier, log):
                 splom=[vars_.index(v) for v in splom if v in vars_])
 
 
-# ---------------------------------------------------------------- figur Streamlit (radar, scree, loading)
 def _judul(teks, sub):
     return dict(text=f"<b>{teks}</b><br><sup>{sub} · Sumber: BPS</sup>", x=0.01, xanchor="left")
 
@@ -269,7 +238,6 @@ def fig_loading(A, vars_):
     return fig
 
 
-# ---------------------------------------------------------------- interpretasi teks
 def _tafsir_pc(L, vars_):
     w = L ** 2
     tema = np.array([_meta(v)[0]["tema"] for v in vars_])
@@ -302,7 +270,6 @@ def _kpi(col, lab, val, sub="", color="#0072B2"):
     kpi_card(col, IKON.get(color, "•"), lab, val, sub, color)
 
 
-# ---------------------------------------------------------------- render
 def render(load_sheet):
     inject_theme()
     df = _muat(load_sheet("GeoNMulti"))
@@ -320,7 +287,6 @@ def render(load_sheet):
          [(len(df), "provinsi"), (len(VARIABEL), "variabel inti"), (tot_a, "usaha akomodasi"), (tot_k, "kamar")])
     story_nav([("mv-1", "1 · Kemiripan profil provinsi"), ("mv-2", "2 · Karakteristik kelompok")])
 
-    # ---------- kontrol analisis
     with panel("mv_filter", "Pengaturan analisis"):
         c1, c2 = st.columns([1, 1], vertical_alignment="center")
         k = c1.slider("Jumlah klaster (K-Means)", 2, 6, 3, key="mv_k",
@@ -344,7 +310,6 @@ def render(load_sheet):
         st.info("Pilih minimal 2 variabel untuk scatterplot matrix.")
         return
 
-    # ---------- komputasi
     X = _transform(df, vars_, log)
     A = _analisis(X, k)
     outlier = A["d2"] > A["batas"]
@@ -354,7 +319,6 @@ def render(load_sheet):
     judul2, top2 = _tafsir_pc(A["komp"][1], vars_)
     prov_out = df.Provinsi[outlier].tolist()
 
-    # ---------- KPI
     k1, k2, k3, k4 = st.columns(4)
     _kpi(k1, "Data", f"{len(df)} × {len(vars_)}", "provinsi × variabel numerik")
     _kpi(k2, "Ragam PC1 + PC2", f"{fmt(ev[:2].sum(), 1)}%", f"PC1 {fmt(ev[0], 1)}% · PC2 {fmt(ev[1], 1)}%",
@@ -372,7 +336,6 @@ def render(load_sheet):
             + f"K-Means membentuk {k} kelompok; kelompok dengan anggota paling sedikit adalah "
               f"<b>{esc(nama_k[klaster_kecil])}</b> ({int((A['klaster'] == klaster_kecil).sum())} provinsi).")
 
-    # ---------- 1. tampilan terhubung
     chapter(1, "mv-1", "Linking dan brushing", "Provinsi mana yang memiliki profil serupa?",
             "Seleksi sekelompok provinsi pada satu grafik untuk melihat posisinya pada grafik lainnya. "
             "Gunakan kotak atau lasso pada biplot dan scatterplot matrix, atau tarik pada sumbu parallel coordinates.")
@@ -386,7 +349,6 @@ def render(load_sheet):
               + ("Sumbu variabel jumlah berskala log10 (label dalam satuan asli). " if log else "")
               + "Warna memakai palet Okabe-Ito (ramah buta warna).")
     st.caption(satuan)
-    # ---------- 2. interpretasi
     chapter(2, "mv-2", "Interpretasi", "Apa karakteristik tiap kelompok dan provinsi mana yang menyimpang?",
             "Kelompok dibentuk dengan K-Means pada variabel yang telah distandarkan, sedangkan pencilan "
             "diidentifikasi menggunakan jarak Mahalanobis pada komponen utama.", "#009E73")
@@ -436,7 +398,6 @@ def render(load_sheet):
         st.markdown(f"**PC2** ({fmt(ev[1], 1)}%): {judul2}. Variabel terkuat: {top2}.")
         st.caption(f"PC1–PC{A['m']} menjelaskan {fmt(ev[:A['m']].sum(), 1)}% ragam dan dipakai untuk mendeteksi pencilan.")
 
-    # ---------- sumber
     st.write("")
     with st.expander("Sumber data"):
         for k_ in ("tpk", "multi", "wisnus_tujuan"):

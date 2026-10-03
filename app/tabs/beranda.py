@@ -1,9 +1,3 @@
-"""Beranda: video layar penuh sebagai latar, tulisan dan angka ringkasan di depannya.
-
-Aset (folder pariwisata/assets/): berkas video (mis. beranda.mp4) dipakai sebagai latar.
-Video diputar lewat st.video lalu dijadikan latar layar penuh dengan CSS, sehingga tidak
-bergantung pada static serving. Tanpa berkas video, latar berupa gradasi biru.
-"""
 from html import escape as esc
 from pathlib import Path
 
@@ -19,7 +13,6 @@ VIDEO_EXT = (".mp4", ".webm", ".mov", ".m4v")
 GAMBAR = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico")
 
 CSS = """<style>
-/* video menjadi latar layar penuh (hanya tampak di tab Beranda) */
 .block-container{position:relative;z-index:1}
 .st-key-bgvideo{position:fixed!important;inset:0;width:100vw!important;height:100vh!important;z-index:-2;
   pointer-events:none;margin:0!important;padding:0!important}
@@ -28,7 +21,6 @@ CSS = """<style>
 .st-key-bgvideo video::-webkit-media-controls,.st-key-bgvideo video::-webkit-media-controls-enclosure{display:none!important}
 .bg-shade{position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:linear-gradient(180deg,rgba(8,20,45,.45) 0%,rgba(8,20,45,.25) 40%,rgba(8,20,45,.78) 100%)}
-/* bar atas tetap terbaca di atas video */
 .brand{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-radius:999px;padding:6px 8px 6px 14px;
   width:fit-content;max-width:100%;box-shadow:0 10px 26px -14px rgba(0,0,0,.45)}
 .brand .tag{display:none}
@@ -88,13 +80,11 @@ try{const v=parent.document.querySelector('.st-key-bgvideo video');if(v){v.muted
 fit();setTimeout(fit,300);setTimeout(fit,1200);try{parent.addEventListener('resize',fit)}catch(e){}
 </script></body></html>"""
 
-# tanpa video: latar gradasi biru di dalam kotak hero
 FALLBACK = (".hero{border-radius:30px;padding:clamp(18px,4vh,48px) clamp(20px,4vw,48px);"
             "background:linear-gradient(125deg,#0B1B3A 0%,#0F3D6B 55%,#0E7490 100%)}")
 
 
 def _cari_video():
-    """Berkas video di assets/ (utamakan nama 'beranda'; ekstensi video, atau nama berawalan 'video')."""
     if not ASSETS.exists():
         return None
     kand = [p for p in sorted(ASSETS.iterdir())
