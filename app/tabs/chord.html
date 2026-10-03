@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  body { margin:0; font-family:'Plus Jakarta Sans', system-ui, sans-serif; background:transparent; color:#0F172A; }
+  #wrap { position:relative; margin:0 auto; }
+  h3 { margin:2px 8px 0; font-size:15px; font-weight:800; }
+  .sub { margin:2px 8px 0; font-size:12px; color:#64748B; }
+  #legend { display:flex; flex-wrap:wrap; gap:4px 12px; margin:8px; font-size:12px; font-weight:600; color:#334155; }
+  #legend span.sw { display:inline-block; width:10px; height:10px; margin-right:6px; border-radius:50%; }
+  #tip { position:absolute; pointer-events:none; opacity:0; transition:opacity .15s;
+         background:rgba(15,23,42,.94); color:#fff; padding:8px 12px; border-radius:10px;
+         font-size:12px; line-height:1.45; max-width:240px; z-index:5; box-shadow:0 10px 24px rgba(0,0,0,.25); }
+  .lbl { font-size:12.5px; font-weight:600; fill:#334155; }
+  .src { font-size:11px; fill:#64748B; }
+  #chart { height: calc(100vh - 92px); }
+  #chart svg { width:100%; height:100%; display:block; }
+  #legend { margin:4px 8px; gap:2px 10px; }
+  .rib { transition: fill-opacity .2s; }
+  .arc { transition: opacity .2s; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <h3>Aliran Perjalanan Wisatawan Nusantara Antarprovinsi</h3>
+    <div id="legend"></div>
+  <div id="chart"></div>
+  <div id="tip"></div>
+</div>
+
+<script>
+const D = __DATA__;           // disuntikkan dari flow.py
+const fmt = new Intl.NumberFormat("id-ID");
+
+d3.select("#legend").selectAll("div").data(D.legend).join("div")
+  .html(d => `<span class="sw" style="background:${d.color}"></span>${d.region}`);
+
+const W = 1000, H = 760, R = 300, inner = R - 15;
+const svg = d3.select("#chart").append("svg")
+  .attr("viewBox", `${-W/2} ${-H/2} ${W} ${H}`)
+  .attr("preserveAspectRatio", "xMidYMid meet")
+  .attr("role", "img")
+  .attr("aria-label", "Chord diagram aliran wisatawan nusantara antarprovinsi");
+
+const chords = d3.chordDirected().padAngle(0.035).sortSubgroups(d3.descending)(D.geo);
+const arc = d3.arc().innerRadius(inner).outerRadius(R);
+const ribbon = d3.ribbonArrow().radius(inner - 2).padAngle(1 / inner);
+const col = i => D.colors[i];
+const tip = d3.select("#tip");
+
+function showTip(html, ev) {
+  const box = document.getElementById("wrap").getBoundingClientRect();
+  tip.html(html).style("opacity", 1)
+     .style("left", Math.min(ev.clientX - box.left + 14, box.width - 250) + "px")
+     .style("top",  (ev.clientY - box.top + 14) + "px");
+}
+const hideTip = () => tip.style("opacity", 0);
+
+// ---------- pita ----------
+const rib = svg.append("g").attr("fill-opacity", 0.72)
+  .selectAll("path").data(chords).join("path")
+    .attr("class", "rib")
+    .attr("d", ribbon)
+    .attr("fill", d => col(d.source.index))
+    .attr("stroke", "#fff").attr("stroke-width", 0.4)
+    .on("mousemove", (ev, d) => {
+      const s = d.source.index, t = d.target.index;
+      showTip(`<b>${D.names[s]} → ${D.names[t]}</b><br>${fmt.format(D.raw[s][t])} perjalanan`
+        + (D.raw[t][s] ? `<br>Arah sebaliknya: ${fmt.format(D.raw[t][s])}` : ""), ev);
+    })
+    .on("mouseleave", () => { hideTip(); restore(); });
+
+// ---------- busur provinsi ----------
+let pinned = null;
+function highlight(i) {
+  rib.attr("fill-opacity", d => (i === null || d.source.index === i || d.target.index === i) ? 0.85 : 0.04);
+  grp.selectAll("path").attr("opacity", d => (i === null || d.index === i) ? 1 : 0.35);
+}
+function provInfo(i) {
+  return [d3.sum(D.raw[i]), d3.sum(D.raw, r => r[i])];
+}
+function restore() { highlight(pinned); }
+
+const grp = svg.append("g").selectAll("g").data(chords.groups).join("g");
+
+grp.append("path")
+  .attr("class", "arc")
+  .attr("d", arc)
+  .attr("fill", d => col(d.index))
+  .attr("stroke", "#fff").attr("stroke-width", 0.8)
+  .style("cursor", "pointer")
+  .on("mousemove", (ev, d) => {
+    const [out, inn] = provInfo(d.index);
+    highlight(d.index);
+    showTip(`<b>${D.names[d.index]}</b><br>Keluar (asal): ${fmt.format(out)}<br>Masuk (tujuan): ${fmt.format(inn)}`, ev);
+  })
+  .on("mouseleave", () => { hideTip(); restore(); })
+  .on("click", (ev, d) => { pinned = (pinned === d.index) ? null : d.index; restore(); });
+
+grp.append("text")
+  .each(d => { d.angle = (d.startAngle + d.endAngle) / 2; })
+  .attr("class", "lbl")
+  .attr("dy", "0.32em")
+  .attr("transform", d => `rotate(${d.angle * 180 / Math.PI - 90}) translate(${R + 8})${d.angle > Math.PI ? " rotate(180)" : ""}`)
+  .attr("text-anchor", d => d.angle > Math.PI ? "end" : "start")
+  .text(d => D.names[d.index]);
+
+// viewBox disesuaikan dengan isi (lingkaran + label) agar chord sebesar mungkin dan label tidak terpotong
+function fitView() {
+  const b = svg.node().getBBox(), p = 10;
+  svg.attr("viewBox", `${b.x - p} ${b.y - p} ${b.width + 2 * p} ${b.height + 2 * p}`);
+}
+fitView();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitView);
+d3.select("#wrap").append("div").attr("class", "src").style("text-align", "center").text("Sumber: BPS");
+</script>
+</body>
+</html>

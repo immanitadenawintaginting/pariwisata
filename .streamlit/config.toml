@@ -1,0 +1,6 @@
+[server]
+enableStaticServing = true   # melayani app/static (salinan video beranda) di /app/static
+
+[theme]
+base = "light"
+primaryColor = "#0072B2"

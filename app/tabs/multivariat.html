@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  :root{--fg:#0F172A;--muted:#64748B;--line:#E2E8F0;--bg:#ffffff;--chip:rgba(128,128,128,.10)}
+  html,body{margin:0;padding:0;background:transparent;color:var(--fg);
+    font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;font-size:14px}
+  body{padding:2px 2px 6px}
+  .bar{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:0 0 8px}
+  .grp{display:flex;align-items:center;gap:8px}
+  .grp>span{font-weight:600;color:var(--muted);font-size:.86rem}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+  .seg button{background:transparent;color:var(--fg);border:0;padding:5px 13px;font:inherit;cursor:pointer}
+  .seg button+button{border-left:1px solid var(--line)}
+  .seg button.on{background:#0F172A;color:#fff;font-weight:700}
+  .btn{border:1px solid var(--line);background:#fff;color:var(--fg);border-radius:999px;
+    padding:5px 13px;font:inherit;cursor:pointer}
+  .btn:hover{background:var(--chip)}
+  .spacer{flex:1 1 auto}
+  .count{font-weight:600}
+  .legend{display:flex;flex-wrap:wrap;gap:4px 8px;margin:0 0 8px}
+  .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;
+    padding:3px 12px;font-size:.86rem;font-weight:600;background:#fff;color:var(--fg);cursor:pointer}
+  .chip:hover{background:var(--chip)}
+  .chip.on{outline:2px solid var(--fg)}
+  .chip i{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .chip.static{cursor:default}
+  .chip.static:hover{background:transparent}
+  .hint{color:var(--muted);font-size:.86rem;margin:0 0 8px}
+  .grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:14px}
+  .card{border:1px solid var(--line);border-radius:20px;padding:6px 6px 2px;min-width:0;background:#fff;box-shadow:0 14px 30px -18px rgba(15,23,42,.25)}
+  .full{grid-column:1 / -1}
+    .sel{padding:6px 12px 10px}
+  .sel h4{margin:6px 0 6px;font-size:.95rem}
+  .sel .chips{display:flex;flex-wrap:wrap;gap:5px 6px}
+  .sel .chips span{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);
+    border-radius:6px;padding:1px 8px;font-size:.84rem}
+  .sel .chips i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .empty{color:var(--muted);font-size:.9rem}
+  @media (max-width:820px){ .grid{grid-template-columns:minmax(0,1fr)} .spacer{display:none} }
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="grp"><span>Warna titik</span><div class="seg" id="segColor"></div></div>
+  <div class="grp"><span>Proyeksi</span><div class="seg" id="segProj"></div></div>
+  <div class="spacer"></div>
+  <div class="count" id="count"></div>
+  <button class="btn" id="reset">Reset seleksi</button>
+</div>
+<div class="legend" id="legend"></div>
+<div class="grid">
+  <div class="card"><div id="emb" style="height:500px"></div></div>
+  <div class="card"><div id="splom" style="height:500px"></div></div>
+  <div class="card"><div id="prof" style="height:460px"></div></div>
+  <div class="card"><div id="par" style="height:460px"></div></div>
+  <div class="card sel full" title="Seret kotak/lasso pada biplot dan scatterplot matrix, atau tarik sumbu parallel coordinates. Klik legenda untuk memilih satu kelompok."><h4 id="selTitle">Provinsi terpilih</h4><div class="chips" id="selChips"></div></div>
+</div>
+<script>
+const D = __DATA__;
+const T = D.theme;
+const R = document.documentElement.style;
+R.setProperty('--fg', T.fg); R.setProperty('--muted', T.muted); R.setProperty('--line', T.line);
+const $ = id => document.getElementById(id);
+const N = D.prov.length;
+const nf = new Intl.NumberFormat('id-ID', {maximumFractionDigits: 1});
+const st = {color: Object.keys(D.col)[0], proj: D.proj0, sel: null, src: null};
+const CFG = {responsive: true, displaylogo: false, displayModeBar: 'hover',
+  modeBarButtonsToRemove: ['autoScale2d', 'toggleSpikelines']};
+const FONT = {family: '"Plus Jakarta Sans",system-ui,sans-serif', color: T.fg, size: 12};
+const GREY = T.grey;
+const title = (t, s) => ({text: '<b>' + t + '</b><br><span style="font-size:11px;color:' + T.muted + '">' + s + ' · Sumber: BPS</span>',
+  x: 0.01, xanchor: 'left', y: 0.98, yanchor: 'top', pad: {t: 4}});
+
+const abbr = t => t.replace(/non-bintang/g,'NB').replace(/bintang/g,'B').replace('Lama menginap','Lama inap').replace('Tempat tidur','T. tidur');
+function G() { return D.col[st.color]; }
+function ptColors() { const g = G(); return g.idx.map(i => g.colors[i]); }
+let loadAnn = [];
+function ptAnn() {
+  const E = D.emb[st.proj], few = st.sel && st.sel.size <= 10, out = [];
+  D.prov.forEach((p, i) => {
+    if (D.outlier[i] || (few && st.sel.has(i)))
+      out.push({x: E.x[i], y: E.y[i], xref: 'x', yref: 'y', text: p, showarrow: false, yshift: 14,
+        font: {size: 11, color: T.fg}, bgcolor: T.bgA, borderpad: 1});
+  });
+  return out;
+}
+function refreshAnn() { Plotly.relayout('emb', {annotations: loadAnn.concat(ptAnn())}); }
+function labels() {
+  const few = st.sel && st.sel.size <= 10;
+  return D.prov.map((p, i) => (D.outlier[i] || (few && st.sel.has(i))) ? p : '');
+}
+function fit() {
+  try {
+    const h = Math.ceil(document.body.getBoundingClientRect().height) + 8;
+    const f = window.frameElement;
+    if (f && Math.abs(f.getBoundingClientRect().height - h) > 3) {
+      f.style.height = h + 'px'; f.setAttribute('height', h);
+      const p = f.parentElement;
+      if (p) { p.style.height = h + 'px'; p.style.minHeight = h + 'px'; }
+    }
+  } catch (e) {}
+}
+
+/* ---------------------------------------------------------- segmented controls */
+function seg(el, opts, cur, cb) {
+  el.innerHTML = '';
+  opts.forEach(o => {
+    const b = document.createElement('button');
+    b.textContent = o; b.className = o === cur ? 'on' : '';
+    b.onclick = () => { cb(o); [...el.children].forEach(c => c.className = c.textContent === o ? 'on' : ''); };
+    el.appendChild(b);
+  });
+}
+
+/* ---------------------------------------------------------- legend */
+function drawLegend() {
+  const g = G(), el = $('legend'); el.innerHTML = '';
+  const cnt = g.names.map((_, j) => g.idx.filter(x => x === j).length);
+  g.names.forEach((nm, j) => {
+    if (!cnt[j]) return;
+    const b = document.createElement('button'); b.className = 'chip'; b.title = 'Klik untuk memilih kelompok ini';
+    b.innerHTML = '<i style="background:' + g.colors[j] + '"></i>' + nm + ' (' + cnt[j] + ')';
+    b.onclick = () => {
+      const m = new Set(); g.idx.forEach((x, i) => { if (x === j) m.add(i); });
+      const same = st.sel && st.sel.size === m.size && [...m].every(i => st.sel.has(i));
+      setSel(same ? null : m, 'legend');
+    };
+    el.appendChild(b);
+  });
+  const o = document.createElement('span'); o.className = 'chip static';
+  o.innerHTML = '<span style="font-size:15px;line-height:1">◆</span> pencilan (jarak Mahalanobis)'; el.appendChild(o);
+}
+
+/* ---------------------------------------------------------- biplot / t-SNE */
+function drawEmb() {
+  const E = D.emb[st.proj], pca = st.proj === 'PCA';
+  const tr = {type: 'scatter', mode: 'markers', x: E.x, y: E.y,
+    hovertext: D.hover, hoverinfo: 'text',
+    marker: {size: D.outlier.map(o => o ? 15 : 11), color: ptColors(), opacity: 1,
+      symbol: D.outlier.map(o => o ? 'diamond' : 'circle'), line: {width: 1.2, color: T.bg}},
+    selectedpoints: st.sel ? [...st.sel] : null,
+    selected: {marker: {opacity: 1}},
+    unselected: {marker: {opacity: 0.2}}};
+  let xs = E.x.slice(), ys = E.y.slice();
+  if (pca) E.loadings.forEach(l => { xs.push(l.x); ys.push(l.y); });
+  const pad = a => { const lo = Math.min(...a, 0), hi = Math.max(...a, 0), d = (hi - lo) * 0.10 || 1; return [lo - d, hi + d]; };
+  const lay = {font: FONT, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', dragmode: 'select',
+    title: title(pca ? 'Biplot PCA: ' + N + ' provinsi' : 'Proyeksi t-SNE: ' + N + ' provinsi',
+      pca ? 'Titik = provinsi, panah = arah naiknya variabel' : 'Jarak dekat = profil serupa; sumbu tidak bermakna'),
+    margin: {l: 48, r: 12, t: 56, b: 42}, showlegend: false, hovermode: 'closest', annotations: [],
+    xaxis: {title: {text: E.xt}, range: pad(xs), zeroline: true, zerolinecolor: T.zero, gridcolor: T.grid, ticks: ''},
+    yaxis: {title: {text: E.yt}, range: pad(ys), zeroline: true, zerolinecolor: T.zero, gridcolor: T.grid, ticks: ''}};
+  if (pca) lay.yaxis.scaleanchor = 'x';
+  Plotly.react('emb', [tr], lay, CFG).then(gd => {
+    if (!gd._hooked) {
+      gd._hooked = true;
+      gd.on('plotly_selected', ev => {
+        if (!ev || !ev.points || !ev.points.length) return pend(null, 'emb');
+        pend(new Set(ev.points.map(p => p.pointNumber)), 'emb');
+      });
+      gd.on('plotly_deselect', () => pend(null, 'emb'));
+    }
+    placeLoadings();
+  });
+}
+function placeLoadings() {
+  const gd = $('emb');
+  if (st.proj !== 'PCA') { loadAnn = []; refreshAnn(); return; }
+  const fl = gd._fullLayout, xa = fl.xaxis, ya = fl.yaxis;
+  const L = D.emb.PCA.loadings;
+  const tip = L.map(l => ({x: xa._offset + xa.l2p(l.x), y: ya._offset + ya.l2p(l.y)}));
+  const ox = xa._offset + xa.l2p(0), oy = ya._offset + ya.l2p(0);
+  const box = L.map(l => ({w: l.lab.length * 6.1 + 10, h: 17}));
+  const pos = tip.map(t => {
+    let dx = t.x - ox, dy = t.y - oy; const d = Math.hypot(dx, dy) || 1;
+    return {x: t.x + dx / d * 24, y: t.y + dy / d * 14};
+  });
+  const x0 = xa._offset, x1 = xa._offset + xa._length, y0 = ya._offset, y1 = ya._offset + ya._length;
+  for (let it = 0; it < 400; it++) {
+    let moved = false;
+    for (let i = 0; i < pos.length; i++) for (let j = i + 1; j < pos.length; j++) {
+      const dx = pos[j].x - pos[i].x, dy = pos[j].y - pos[i].y;
+      const ovx = (box[i].w + box[j].w) / 2 - Math.abs(dx), ovy = (box[i].h + box[j].h) / 2 - Math.abs(dy);
+      if (ovx > 0 && ovy > 0) {
+        moved = true;
+        if (ovy <= ovx) { const s = (dy >= 0 ? 1 : -1) * (ovy / 2 + 0.5); pos[i].y -= s; pos[j].y += s; }
+        else { const s = (dx >= 0 ? 1 : -1) * (ovx / 2 + 0.5); pos[i].x -= s; pos[j].x += s; }
+      }
+    }
+    pos.forEach((p, i) => {
+      p.x = Math.min(Math.max(p.x, x0 + box[i].w / 2), x1 - box[i].w / 2);
+      p.y = Math.min(Math.max(p.y, y0 + box[i].h / 2), y1 - box[i].h / 2);
+    });
+    if (!moved) break;
+  }
+  const ann = [];
+  L.forEach((l, i) => {
+    ann.push({x: l.x, y: l.y, ax: 0, ay: 0, axref: 'x', ayref: 'y', xref: 'x', yref: 'y', showarrow: true,
+      arrowhead: 2, arrowsize: 1, arrowwidth: 1.5, arrowcolor: T.arrow, text: ''});
+    ann.push({x: l.x, y: l.y, xref: 'x', yref: 'y', ax: pos[i].x - tip[i].x, ay: pos[i].y - tip[i].y,
+      axref: 'pixel', ayref: 'pixel', showarrow: true, arrowhead: 0, arrowwidth: 0.6, arrowcolor: T.muted,
+      standoff: 0, text: l.lab, font: {size: 11, color: T.fg}, bgcolor: T.bgA, borderpad: 1});
+  });
+  loadAnn = ann; refreshAnn();
+}
+
+/* ---------------------------------------------------------- SPLOM */
+function drawSplom() {
+  const dims = D.splom.map(k => { const v = D.vars[k]; return {label: abbr(v.short), values: v.raw}; });
+  const tr = {type: 'splom', dimensions: dims, text: D.prov, hovertext: D.prov, hoverinfo: 'text',
+    showupperhalf: false, diagonal: {visible: false},
+    marker: {size: 8, color: ptColors(), opacity: 1, line: {width: 0.6, color: T.bg}},
+    selectedpoints: st.sel ? [...st.sel] : null,
+    selected: {marker: {opacity: 1}}, unselected: {marker: {opacity: 0.2}}};
+  const lay = {font: FONT, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', dragmode: 'select',
+    title: title('Scatterplot matrix', 'B = bintang, NB = non-bintang · jumlah berskala log'),
+    margin: {l: 78, r: 14, t: 56, b: 48}, showlegend: false, hovermode: 'closest', separators: ',.'};
+  D.splom.forEach((k, j) => {
+    const v = D.vars[k], s = j === 0 ? '' : String(j + 1);
+    const ax = {gridcolor: T.grid, zeroline: false, tickfont: {size: 9}, titlefont: {size: 10},
+      automargin: true, showline: true, linecolor: T.grid};
+    if (v.log) { ax.type = 'log'; ax.dtick = 1; ax.tickformat = ',.0f'; }
+    lay['xaxis' + s] = Object.assign({}, ax); lay['yaxis' + s] = Object.assign({}, ax);
+  });
+  Plotly.react('splom', [tr], lay, CFG).then(gd => {
+    if (!gd._hooked) {
+      gd._hooked = true;
+      gd.on('plotly_selected', ev => {
+        if (!ev || !ev.points || !ev.points.length) return pend(null, 'splom');
+        pend(new Set(ev.points.map(p => p.pointNumber)), 'splom');
+      });
+      gd.on('plotly_deselect', () => pend(null, 'splom'));
+    }
+  });
+}
+
+/* ---------------------------------------------------------- parallel coordinates */
+function parSpec(highlight) {
+  const g = G(), K = g.names.length;
+  let order = [...Array(N).keys()];
+  let col;
+  if (highlight) {
+    order.sort((a, b) => (st.sel.has(a) ? 1 : 0) - (st.sel.has(b) ? 1 : 0));
+    col = order.map(i => st.sel.has(i) ? g.idx[i] : K);
+  } else col = order.map(i => g.idx[i]);
+  const cols = g.colors.concat([GREY]);
+  const scale = cols.map((c, j) => [j / K, c]);
+  const dims = D.vars.map(v => {
+    const d = {label: abbr(v.lab), values: order.map(i => v.plot[i]), range: v.range};
+    if (v.tv) { d.tickvals = v.tv; d.ticktext = v.tt; }
+    return d;
+  });
+  return {data: [{type: 'parcoords', dimensions: dims, labelfont: {size: 10.5, color: T.fg},
+      tickfont: {size: 10, color: T.fg}, rangefont: {size: 1, color: 'rgba(0,0,0,0)'},
+      line: {color: col, colorscale: scale, cmin: 0, cmax: K, showscale: false},
+      unselected: {line: {color: GREY, opacity: 0.12}}}],
+    order};
+}
+let parOrder = null;
+function drawPar(highlight) {
+  const sp = parSpec(highlight); parOrder = sp.order;
+  const lay = {font: FONT, paper_bgcolor: 'rgba(0,0,0,0)', separators: ',.',
+    title: title('Parallel coordinates', 'Tarik sumbu untuk menyaring · B = bintang, NB = non-bintang'),
+    margin: {l: 36, r: 36, t: 96, b: 14}};
+  Plotly.react('par', sp.data, lay, CFG).then(gd => {
+    if (!gd._hooked) {
+      gd._hooked = true;
+      gd.on('plotly_restyle', () => {
+        if (st.busy) return;
+        const dims = (gd.data[0] && gd.data[0].dimensions) || [];
+        const act = [];
+        dims.forEach((d, j) => {
+          let c = d.constraintrange; if (!c || !c.length) return;
+          if (typeof c[0] === 'number') c = [c];
+          act.push([j, c]);
+        });
+        if (!act.length) { if (st.src === 'par') setSel(null, 'par'); return; }
+        const s = new Set();
+        for (let r = 0; r < N; r++) {
+          const i = parOrder[r];
+          if (act.every(([j, c]) => c.some(rg => D.vars[j].plot[i] >= rg[0] && D.vars[j].plot[i] <= rg[1]))) s.add(i);
+        }
+        setSel(s.size ? s : null, 'par');
+      });
+    }
+  });
+}
+
+/* ---------------------------------------------------------- profil seleksi */
+function drawProf() {
+  const names = D.vars.map(v => v.short);
+  let z = D.vars.map(() => 0);
+  const has = st.sel && st.sel.size;
+  if (has) z = D.vars.map((v, j) => { let s = 0; st.sel.forEach(i => s += D.Z[i][j]); return s / st.sel.size; });
+  const zr = Math.max(1.5, Math.ceil(Math.max(...z.map(Math.abs)) * 1.2 * 2) / 2);
+  const tr = {type: 'bar', orientation: 'h', x: z, y: names, marker: {color: z.map(v => v >= 0 ? '#D55E00' : '#0072B2')},
+    hovertemplate: '%{y}<br>rata-rata z = %{x:.2f}<extra></extra>'};
+  const lay = {font: FONT, paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)', separators: ',.',
+    title: title('Profil seleksi', 'Rata-rata z-score; 0 = rata-rata ' + N + ' provinsi'),
+    margin: {l: 160, r: 14, t: 56, b: 52}, bargap: 0.3, showlegend: false,
+    xaxis: {range: [-zr, zr], zeroline: true, zerolinecolor: T.zero, gridcolor: T.grid, title: {text: 'z-score (oranye-merah lebih tinggi, biru lebih rendah)', font: {size: 10}}},
+    yaxis: {autorange: 'reversed', tickfont: {size: 11}},
+    annotations: has ? [] : [{text: 'Pilih provinsi pada salah satu grafik', xref: 'paper', yref: 'paper', x: 0.5, y: 0.5,
+      showarrow: false, font: {size: 13, color: T.muted}}]};
+  Plotly.react('prof', [tr], lay, {responsive: true, displayModeBar: false});
+}
+
+/* ---------------------------------------------------------- seleksi bersama */
+function drawChips() {
+  const el = $('selChips'), g = G();
+  const has = st.sel && st.sel.size;
+  $('count').textContent = has ? 'Terpilih: ' + st.sel.size + ' dari ' + N + ' provinsi' : 'Belum ada seleksi';
+  $('selTitle').textContent = has ? 'Provinsi terpilih (' + st.sel.size + ')' : 'Provinsi terpilih';
+  if (!has) { el.innerHTML = '<span class="empty" style="border:0">Belum ada. Seret kotak/lasso pada grafik, tarik sumbu parallel coordinates, atau klik legenda.</span>'; return; }
+  el.innerHTML = [...st.sel].sort((a, b) => D.prov[a].localeCompare(D.prov[b]))
+    .map(i => '<span><i style="background:' + g.colors[g.idx[i]] + '"></i>' + D.prov[i] + '</span>').join('');
+}
+let pendT = null;
+let pendSet = null;
+function pend(set, src) {
+  if (!set && pendSet) return;            // plotly mengirim event kosong susulan setelah seleksi valid: abaikan
+  clearTimeout(pendT); pendSet = set;
+  pendT = setTimeout(() => { pendSet = null; setSel(set, src); }, 90);
+}
+function setSel(set, src) {
+  st.sel = set && set.size ? set : null; st.src = src;
+  st.busy = true;
+  const arr = st.sel ? [...st.sel] : null;
+  if (src !== 'emb' || !st.sel) { Plotly.restyle('emb', {selectedpoints: [arr]}); Plotly.relayout('emb', {selections: []}); }
+  if (src !== 'init') refreshAnn();
+  if (src !== 'splom' || !st.sel) { Plotly.restyle('splom', {selectedpoints: [arr]}); Plotly.relayout('splom', {selections: []}); }
+  if (src !== 'par') drawPar(!!st.sel);
+  drawProf(); drawChips();
+  setTimeout(() => { st.busy = false; }, 300);
+}
+function recolor() {
+  drawLegend();
+  Plotly.restyle('emb', {'marker.color': [ptColors()]});
+  Plotly.restyle('splom', {'marker.color': [ptColors()]});
+  if (st.src !== 'par' || !st.sel) drawPar(!!st.sel);
+  drawChips();
+}
+
+seg($('segColor'), Object.keys(D.col), st.color, o => { st.color = o; recolor(); });
+if (Object.keys(D.emb).length < 2) $('segProj').parentElement.style.display = 'none';
+seg($('segProj'), Object.keys(D.emb), st.proj, o => { st.proj = o; st.sel = st.sel; drawEmb(); });
+$('reset').onclick = () => { setSel(null, 'reset'); drawEmb(); drawSplom(); };
+drawLegend(); drawEmb(); drawSplom(); drawPar(false); drawProf(); drawChips();
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { placeLoadings(); fit(); }, 200); });
+new ResizeObserver(() => fit()).observe(document.body);
+setTimeout(fit, 600); setTimeout(fit, 1800);
+</script>
+</body>
+</html>
