@@ -353,6 +353,15 @@ def render(load_sheet):
               + ("Sumbu variabel jumlah berskala log10 (label dalam satuan asli). " if log else "")
               + "Warna memakai palet Okabe-Ito (ramah buta warna).")
     st.caption(satuan)
+    Ad = _analisis(_transform(df, VARIABEL, True), 3)
+    judul_d, _ = _tafsir_pc(Ad["komp"][0], VARIABEL)
+    pc1 = pd.Series(Ad["skor"][:, 0], index=df.Provinsi).sort_values()
+    insight(f"Pada pengaturan bawaan ({len(VARIABEL)} indikator akomodasi, skala log10), PC1 "
+            f"({fmt(Ad['ev'][0] * 100, 1)}%) mencerminkan <b>{judul_d}</b>. Provinsi dengan posisi tertinggi adalah "
+            f"<b>{esc(', '.join(pc1.index[::-1][:3]))}</b> dan yang terendah adalah "
+            f"<b>{esc(', '.join(pc1.index[:3]))}</b>. "
+            + ("Posisi di sisi tinggi berarti kapasitas akomodasi besar, bukan otomatis tingkat hunian yang tinggi."
+               if judul_d.startswith("skala") else "Posisi di sisi tinggi berarti kinerja hunian yang lebih baik."))
     chapter(2, "mv-2", "Interpretasi", "Apa karakteristik tiap kelompok dan provinsi mana yang menyimpang?",
             "Kelompok dibentuk dengan K-Means pada variabel yang telah distandarkan, sedangkan pencilan "
             "diidentifikasi menggunakan jarak Mahalanobis pada komponen utama.", "#009E73")
@@ -402,6 +411,26 @@ def render(load_sheet):
         st.markdown(f"**PC2** ({fmt(ev[1], 1)}%): {judul2}. Variabel terkuat: {top2}.")
         st.caption(f"PC1–PC{A['m']} menjelaskan {fmt(ev[:A['m']].sum(), 1)}% ragam dan dipakai untuk mendeteksi pencilan.")
 
+    nama_d = _nama_klaster(Ad["Z"], Ad["klaster"], VARIABEL, 3)
+    besar = int(pd.Series(Ad["klaster"]).value_counts().idxmax())
+    mb = Ad["klaster"] == besar
+    out_d = df.Provinsi[Ad["d2"] > Ad["batas"]].tolist()
+    tema_v = np.array([_meta(x)[0]["tema"] for x in VARIABEL])
+    r = float(np.corrcoef(Ad["Z"][:, tema_v == "skala"].mean(axis=1), Ad["Z"][:, tema_v == "hunian"].mean(axis=1))[0, 1])
+    insight(f"Pada pengaturan bawaan (tiga klaster), kelompok terbesar, <b>{esc(nama_d[besar])}</b>, beranggotakan "
+            f"{int(mb.sum())} dari {len(df)} provinsi dengan profil {esc(_profil(Ad['Z'], mb, VARIABEL))} Nilai "
+            f"silhouette {fmt(Ad['sil'], 2)} menunjukkan "
+            + ("batas antarkelompok yang cukup tegas. " if Ad["sil"] >= 0.5 else
+               "pemisahan kelompok yang cukup jelas. " if Ad["sil"] >= 0.25 else
+               "batas antarkelompok yang samar. ")
+            + (f"Provinsi pencilan ({esc(', '.join(out_d))}) bukan kesalahan data, melainkan provinsi dengan skala "
+               "akomodasi yang jauh berbeda dari mayoritas. " if out_d else "Tidak ada provinsi pencilan. ")
+            + f"Korelasi antara skor skala akomodasi dan skor hunian sebesar <b>{fmt(r, 2)}</b>"
+            + (", lemah, sehingga provinsi dengan akomodasi besar tidak otomatis memiliki hunian tinggi dan "
+               "keduanya perlu dibaca terpisah." if abs(r) < 0.3 else
+               ", sehingga provinsi dengan akomodasi lebih besar cenderung memiliki hunian lebih tinggi." if r > 0 else
+               ", sehingga provinsi dengan akomodasi lebih besar cenderung memiliki hunian lebih rendah."))
+    st.write("")
     st.write("")
     with st.expander("Sumber data"):
         for k_ in ("multi",):

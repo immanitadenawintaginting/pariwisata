@@ -141,7 +141,11 @@ def _bagian_akomodasi(akom, d_sel, depth):
     insight(f"Hotel berbintang hanya mencakup {sh_a:.1f}% dari jumlah usaha akomodasi, tetapi menyumbang "
             f"{sh_k:.1f}% dari jumlah kamar. TPK hotel berbintang lebih tinggi daripada non-bintang pada {lebih} dari "
             f"{b['Provinsi'].nunique()} provinsi; TPK hotel berbintang tertinggi tercatat di {top['Provinsi']} "
-            f"({top['TPK']:.1f}%).")
+            f"({top['TPK']:.1f}%). "
+            f"Rata-rata sebuah usaha berbintang memiliki <b>{b['Kamar'].sum() / b['Akomodasi'].sum():.0f}</b> kamar, "
+            f"sedangkan usaha non-bintang hanya <b>{nb['Kamar'].sum() / nb['Akomodasi'].sum():.0f}</b> kamar. "
+            "Kapasitas penginapan ditopang oleh sedikit usaha besar, sementara usaha non-bintang tersebar luas "
+            "tetapi berskala kecil, sehingga kebutuhan peningkatan kapasitas dan pembinaan usaha kecil berbeda.")
 
 
 def _bagian_gender(gender, d_sel, depth):
@@ -187,7 +191,12 @@ def _bagian_gender(gender, d_sel, depth):
     _kpi(m3, f"% {kata} terendah", f"{p.min():.1f}%".replace(".", ","), p.idxmin(), "#D55E00")
     insight(f"Persentase wisatawan {kata} secara nasional sebesar {nas:.1f}% dari seluruh perjalanan. "
             f"Persentase tertinggi tercatat di {p.idxmax()} ({p.max():.1f}%) dan terendah di {p.idxmin()} "
-            f"({p.min():.1f}%); menurut pulau, nilai tertinggi berada di {pul.idxmax()} ({pul.max():.1f}%).")
+            f"({p.min():.1f}%); menurut pulau, nilai tertinggi berada di {pul.idxmax()} ({pul.max():.1f}%). "
+            f"Rentang antarprovinsi sebesar <b>{p.max() - p.min():.1f}</b> poin persentase. "
+            + ("Komposisi jenis kelamin relatif seragam, sehingga tampak bukan pembeda utama antarprovinsi."
+               if p.max() - p.min() < 10 else
+               "Komposisi jenis kelamin bervariasi cukup lebar, sehingga perlu diperhatikan dalam menyusun "
+               "layanan dan promosi di provinsi dengan nilai ekstrem."))
 
 
 def render(load_sheet):

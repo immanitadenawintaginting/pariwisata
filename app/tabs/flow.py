@@ -10,8 +10,8 @@ import streamlit.components.v1 as components
 
 from prapemrosesan import bersihkan_flow
 from sumber import CATATAN_WISMAN, kutip
-from theme import (card, chapter, chips, hero, inject_theme, insight, kpi_card, panel,
-                   polish, story_nav)
+from theme import (card, chapter, chips, hero, inject_theme, insight, kpi_card,
+                   panel, polish, story_nav)
 
 
 HTML_PATH = Path(__file__).parent / "chord.html"
@@ -397,12 +397,13 @@ def render(load, load_sheet):
         else:
             show(sankey(s_f, focus_t))
     st.caption(CATATAN_WISMAN)
-    if not s_f.empty:
-        by_p = s_f.groupby("Target")["Value"].sum().sort_values(ascending=False)
-        t1 = s_f.nlargest(1, "Value").iloc[0]
-        insight(f"Rute dengan kunjungan terbesar adalah <b>{esc(t1.Source)} → {esc(t1.Target)}</b> "
-                f"({fmt_id(t1.Value)} kunjungan). Tujuan <b>{esc(by_p.index[0])}</b> menerima "
-                f"{by_p.iloc[0] / by_p.sum():.0%} dari seluruh kunjungan pada filter yang dipilih.")
+    top_neg3 = by_cty.iloc[:3]
+    top_lok3 = m.groupby("Provinsi")["Value"].sum().nlargest(3)
+    insight(f"Negara asal terbesar adalah <b>{esc(by_cty.index[0])}</b> ({by_cty.iloc[0] / by_cty.sum():.0%}), dan tiga "
+            f"negara asal teratas ({esc(', '.join(top_neg3.index))}) menyumbang <b>{top_neg3.sum() / by_cty.sum():.0%}</b> "
+            f"kunjungan. Tiga lokasi kedatangan teratas ({esc(', '.join(top_lok3.index))}) menyerap "
+            f"<b>{top_lok3.sum() / total_m:.0%}</b>. Kunjungan wisman bertumpu pada sedikit pasar dan pintu, sehingga "
+            "perubahan pada satu pasar utama akan terasa langsung pada tujuan yang menjadi pintunya.")
     chapter(2, "bab-2", "Matriks OD", "Pasangan asal-tujuan mana yang paling dominan?",
             "Sankey menampilkan aliran terbesar, sedangkan matriks asal-tujuan (OD) memperlihatkan seluruh "
             "pasangan, termasuk pasangan dengan kunjungan sangat rendah. Sel yang lebih terang menunjukkan "
@@ -424,13 +425,14 @@ def render(load, load_sheet):
             h = agg.rename(columns={"Asal": "Y", "T": "X"})
             h["Rank"] = h["Value"].rank(ascending=False, method="min")
             show(heatmap(h, focus_t, log=(skl == "Logaritmik")))
-    if not agg.empty and agg["Value"].sum() > 0:
-        tp = agg.nlargest(1, "Value").iloc[0]
-        sh5 = agg.nlargest(5, "Value")["Value"].sum() / agg["Value"].sum()
-        n0 = int((agg["Value"] == 0).sum())
-        insight(f"Pasangan terbesar adalah <b>{esc(tp['Asal'])} → {esc(tp['T'])}</b> ({fmt_id(tp['Value'])} kunjungan). "
-                f"Lima pasangan teratas menyumbang <b>{sh5:.0%}</b> dari seluruh kunjungan pada filter ini, "
-                f"sedangkan {n0} pasangan tidak mencatat kunjungan sama sekali.")
+    tp = neg.nlargest(1, "Value").iloc[0]
+    sh5 = neg.nlargest(5, "Value")["Value"].sum() / neg["Value"].sum()
+    kosong = (neg["Value"] == 0).mean()
+    insight(f"Pasangan negara-pintu terbesar adalah <b>{esc(tp['Asal'])} → {esc(tp['Tujuan'])}</b> "
+            f"({fmt_id(tp['Value'])} kunjungan). Lima pasangan teratas menyumbang <b>{sh5:.0%}</b> dari seluruh "
+            f"kunjungan, sedangkan <b>{kosong:.0%}</b> kombinasi negara dan pintu tidak mencatat kunjungan. Pola ini "
+            "menunjukkan kedatangan yang terspesialisasi: negara tertentu cenderung memakai pintu tertentu dan tidak "
+            "tersebar merata ke semua pintu.")
     chapter(3, "bab-3", "Chord", "Bagaimana pola perjalanan wisatawan antarprovinsi?",
             f"Sebesar <b>{self_share:.0%}</b> perjalanan wisatawan nusantara berlangsung di dalam provinsi yang "
             "sama. Perjalanan dalam provinsi dikeluarkan secara bawaan agar keterkaitan antarprovinsi dapat "
@@ -454,8 +456,22 @@ def render(load, load_sheet):
     with right, card("bar"):
         show(top_pairs_bar(c, focus))
 
-    insight(f"Perjalanan dalam provinsi mencapai <b>{self_share:.0%}</b> dari seluruh perjalanan "
-            "wisatawan nusantara, sehingga dikeluarkan secara bawaan agar aliran antarprovinsi dapat diamati.")
+    masuk = nonself.groupby("Tujuan")["Value"].sum()
+    keluar = nonself.groupby("Asal")["Value"].sum()
+    neto = masuk.sub(keluar, fill_value=0).sort_values()
+    teratas = masuk.nlargest(5)
+    pasang = nonself.nlargest(1, "Value").iloc[0]
+    reg = nonself.assign(a=nonself["Asal"].map(REGION_OF), t=nonself["Tujuan"].map(REGION_OF))
+    sewilayah = reg.loc[reg["a"] == reg["t"], "Value"].sum() / reg["Value"].sum()
+    insight(f"Perjalanan dalam provinsi mencapai <b>{self_share:.0%}</b> dari seluruh perjalanan wisatawan nusantara, "
+            f"sehingga dikeluarkan secara bawaan. Dari perjalanan antarprovinsi, lima provinsi tujuan teratas "
+            f"({esc(', '.join(teratas.index))}) menerima <b>{teratas.sum() / masuk.sum():.0%}</b>, dan "
+            f"<b>{sewilayah:.0%}</b> terjadi di dalam wilayah yang sama. Aliran terbesar adalah "
+            f"<b>{esc(pasang.Asal)} → {esc(pasang.Tujuan)}</b> ({fmt_id(pasang.Value)} perjalanan). Selisih bersih "
+            f"perjalanan masuk dan keluar paling positif di <b>{esc(neto.index[-1])}</b> (+{compact(neto.iloc[-1])}) "
+            f"dan paling negatif di <b>{esc(neto.index[0])}</b> (−{compact(abs(neto.iloc[0]))}). Wisatawan nusantara "
+            "cenderung bepergian ke wilayah yang dekat, dengan Pulau Jawa sebagai pusat arus.")
+    st.write("")
     st.write("")
     with st.expander("Sumber data"):
         st.markdown("- " + kutip("manca", True))
