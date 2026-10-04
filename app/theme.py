@@ -112,6 +112,26 @@ button[data-baseweb="tab"][aria-selected="true"] p{color:#fff!important}
   .block-container{padding:.8rem .8rem 3rem}
   .ch{flex-direction:column;gap:2px;margin-top:24px}.ch-no{font-size:2.4rem}.ch h2{font-size:1.35rem}
   .brand .tag{display:none}}
+[data-testid="stHeader"]{display:none}
+.stApp [id]{scroll-margin-top:88px}
+[data-testid="stLayoutWrapper"]:has(> .st-key-brandbar){position:sticky;top:8px;z-index:1000;height:0;overflow:visible;margin-bottom:-1rem;pointer-events:none}
+.st-key-brandbar{margin:0;pointer-events:none}
+.st-key-brandbar .brand{pointer-events:auto;margin:0;min-height:58px;box-sizing:border-box;width:fit-content;background:#fff;border:1px solid var(--line);border-radius:999px;
+  padding:4px 20px 4px 12px;box-shadow:0 12px 30px -12px rgba(15,23,42,.30)}
+.st-key-brandbar .brand img.logo{height:44px}
+.st-key-nav [role="tablist"]:not([role="tabpanel"] *){position:sticky;top:8px;z-index:999;margin-left:auto}
+.st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *){padding:10px 20px!important}
+.st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *) p{font-size:.95rem}
+@media(max-width:1100px){
+  [data-testid="stLayoutWrapper"]:has(> .st-key-brandbar){position:static;height:auto;margin-bottom:0}
+  .st-key-nav [role="tablist"]:not([role="tabpanel"] *){margin-left:0;width:100%;overflow-x:auto;
+    scrollbar-width:none;justify-content:space-between}
+  .st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *){padding:9px 12px!important}
+  .st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *) p{font-size:.85rem}}
+@media(max-width:480px){
+  .st-key-nav [role="tablist"]:not([role="tabpanel"] *){gap:2px!important;padding:4px!important}
+  .st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *){padding:8px 8px!important}
+  .st-key-nav [data-testid="stTab"]:not([role="tabpanel"] *) p{font-size:.78rem}}
 </style>
 """
 
@@ -181,8 +201,9 @@ def data_uri(path):
 def brand_bar(nama="Pariwisata Indonesia", tag="Sumber: BPS", logo=None):
     mark = f'<img class="logo" src="{logo}" alt="Logo {esc(nama)}">' if logo else '<span class="dot"></span>'
     teks = "" if logo else esc(nama)
-    st.markdown(f'<div class="brand">{mark}{teks}'
-                f'<span class="tag">{esc(tag)}</span></div>', unsafe_allow_html=True)
+    with st.container(key="brandbar"):
+        st.markdown(f'<div class="brand">{mark}{teks}'
+                    f'<span class="tag">{esc(tag)}</span></div>', unsafe_allow_html=True)
 
 
 def section_title(eyebrow, title, lead="", anchor=""):

@@ -1,0 +1,1445 @@
+Asal,Tujuan,Value
+Aceh,Aceh,17606654
+Aceh,Sumatera Utara,2263305
+Aceh,Sumatera Barat,39111
+Aceh,Riau,54032
+Aceh,Jambi,11364
+Aceh,Sumatera Selatan,22154
+Sumatera Utara,Aceh,1898870
+Sumatera Utara,Sumatera Utara,49622538
+Sumatera Utara,Sumatera Barat,570616
+Sumatera Utara,Riau,2135697
+Sumatera Utara,Jambi,111747
+Sumatera Utara,Sumatera Selatan,112399
+Sumatera Barat,Aceh,34855
+Sumatera Barat,Sumatera Utara,466868
+Sumatera Barat,Sumatera Barat,16760084
+Sumatera Barat,Riau,1463689
+Sumatera Barat,Jambi,701792
+Sumatera Barat,Sumatera Selatan,97084
+Riau,Aceh,63073
+Riau,Sumatera Utara,2200160
+Riau,Sumatera Barat,2371142
+Riau,Riau,18375159
+Riau,Jambi,346724
+Riau,Sumatera Selatan,119310
+Jambi,Aceh,13314
+Jambi,Sumatera Utara,122514
+Jambi,Sumatera Barat,998390
+Jambi,Riau,357328
+Jambi,Jambi,8125989
+Jambi,Sumatera Selatan,757071
+Sumatera Selatan,Aceh,24542
+Sumatera Selatan,Sumatera Utara,126670
+Sumatera Selatan,Sumatera Barat,119957
+Sumatera Selatan,Riau,126380
+Sumatera Selatan,Jambi,789426
+Sumatera Selatan,Sumatera Selatan,20095826
+Bengkulu,Aceh,5866
+Bengkulu,Sumatera Utara,34625
+Bengkulu,Sumatera Barat,260301
+Bengkulu,Riau,28506
+Bengkulu,Jambi,94400
+Bengkulu,Sumatera Selatan,655461
+Lampung,Aceh,16037
+Lampung,Sumatera Utara,86745
+Lampung,Sumatera Barat,70402
+Lampung,Riau,99668
+Lampung,Jambi,133030
+Lampung,Sumatera Selatan,2088689
+Kepulauan Bangka Belitung,Aceh,3266
+Kepulauan Bangka Belitung,Sumatera Utara,16721
+Kepulauan Bangka Belitung,Sumatera Barat,8749
+Kepulauan Bangka Belitung,Riau,11144
+Kepulauan Bangka Belitung,Jambi,1842
+Kepulauan Bangka Belitung,Sumatera Selatan,224144
+Kepulauan Riau,Aceh,19353
+Kepulauan Riau,Sumatera Utara,182825
+Kepulauan Riau,Sumatera Barat,96547
+Kepulauan Riau,Riau,284359
+Kepulauan Riau,Jambi,35646
+Kepulauan Riau,Sumatera Selatan,48538
+DKI Jakarta,Aceh,73492
+DKI Jakarta,Sumatera Utara,400550
+DKI Jakarta,Sumatera Barat,245721
+DKI Jakarta,Riau,199976
+DKI Jakarta,Jambi,90952
+DKI Jakarta,Sumatera Selatan,355135
+Jawa Barat,Aceh,120331
+Jawa Barat,Sumatera Utara,512060
+Jawa Barat,Sumatera Barat,332683
+Jawa Barat,Riau,265581
+Jawa Barat,Jambi,144189
+Jawa Barat,Sumatera Selatan,555739
+Jawa Tengah,Aceh,34343
+Jawa Tengah,Sumatera Utara,130346
+Jawa Tengah,Sumatera Barat,67933
+Jawa Tengah,Riau,104979
+Jawa Tengah,Jambi,75171
+Jawa Tengah,Sumatera Selatan,194361
+DI Yogyakarta,Aceh,8907
+DI Yogyakarta,Sumatera Utara,33814
+DI Yogyakarta,Sumatera Barat,19343
+DI Yogyakarta,Riau,34928
+DI Yogyakarta,Jambi,20548
+DI Yogyakarta,Sumatera Selatan,57050
+Jawa Timur,Aceh,33558
+Jawa Timur,Sumatera Utara,121402
+Jawa Timur,Sumatera Barat,50397
+Jawa Timur,Riau,85418
+Jawa Timur,Jambi,40417
+Jawa Timur,Sumatera Selatan,120083
+Banten,Aceh,44998
+Banten,Sumatera Utara,250278
+Banten,Sumatera Barat,159746
+Banten,Riau,126257
+Banten,Jambi,67265
+Banten,Sumatera Selatan,361275
+Bali,Aceh,104
+Bali,Sumatera Utara,30615
+Bali,Sumatera Barat,10967
+Bali,Riau,11256
+Bali,Jambi,5583
+Bali,Sumatera Selatan,18084
+Nusa Tenggara Barat,Aceh,10521
+Nusa Tenggara Barat,Sumatera Utara,30589
+Nusa Tenggara Barat,Sumatera Barat,11962
+Nusa Tenggara Barat,Riau,15583
+Nusa Tenggara Barat,Jambi,6897
+Nusa Tenggara Barat,Sumatera Selatan,16341
+Nusa Tenggara Timur,Aceh,15830
+Nusa Tenggara Timur,Sumatera Utara,33512
+Nusa Tenggara Timur,Sumatera Barat,950
+Nusa Tenggara Timur,Riau,19499
+Nusa Tenggara Timur,Jambi,8059
+Nusa Tenggara Timur,Sumatera Selatan,20490
+Kalimantan Barat,Aceh,8470
+Kalimantan Barat,Sumatera Utara,33339
+Kalimantan Barat,Sumatera Barat,10747
+Kalimantan Barat,Riau,18320
+Kalimantan Barat,Jambi,6803
+Kalimantan Barat,Sumatera Selatan,17347
+Kalimantan Tengah,Aceh,4873
+Kalimantan Tengah,Sumatera Utara,26123
+Kalimantan Tengah,Sumatera Barat,7203
+Kalimantan Tengah,Riau,12137
+Kalimantan Tengah,Jambi,5321
+Kalimantan Tengah,Sumatera Selatan,12294
+Kalimantan Selatan,Aceh,5250
+Kalimantan Selatan,Sumatera Utara,23809
+Kalimantan Selatan,Sumatera Barat,9540
+Kalimantan Selatan,Riau,11005
+Kalimantan Selatan,Jambi,561
+Kalimantan Selatan,Sumatera Selatan,15129
+Kalimantan Timur,Aceh,7780
+Kalimantan Timur,Sumatera Utara,38019
+Kalimantan Timur,Sumatera Barat,12640
+Kalimantan Timur,Riau,18585
+Kalimantan Timur,Jambi,7400
+Kalimantan Timur,Sumatera Selatan,24936
+Kalimantan Utara,Aceh,1808
+Kalimantan Utara,Sumatera Utara,7601
+Kalimantan Utara,Sumatera Barat,2164
+Kalimantan Utara,Riau,4300
+Kalimantan Utara,Jambi,1502
+Kalimantan Utara,Sumatera Selatan,463
+Sulawesi Utara,Aceh,2730
+Sulawesi Utara,Sumatera Utara,10144
+Sulawesi Utara,Sumatera Barat,3322
+Sulawesi Utara,Riau,5149
+Sulawesi Utara,Jambi,2231
+Sulawesi Utara,Sumatera Selatan,6128
+Sulawesi Tengah,Aceh,5135
+Sulawesi Tengah,Sumatera Utara,15966
+Sulawesi Tengah,Sumatera Barat,6414
+Sulawesi Tengah,Riau,10203
+Sulawesi Tengah,Jambi,3983
+Sulawesi Tengah,Sumatera Selatan,10740
+Sulawesi Selatan,Aceh,10156
+Sulawesi Selatan,Sumatera Utara,32713
+Sulawesi Selatan,Sumatera Barat,13775
+Sulawesi Selatan,Riau,15943
+Sulawesi Selatan,Jambi,8006
+Sulawesi Selatan,Sumatera Selatan,18924
+Sulawesi Tenggara,Aceh,3053
+Sulawesi Tenggara,Sumatera Utara,9144
+Sulawesi Tenggara,Sumatera Barat,3648
+Sulawesi Tenggara,Riau,5754
+Sulawesi Tenggara,Jambi,2700
+Sulawesi Tenggara,Sumatera Selatan,6546
+Gorontalo,Aceh,1791
+Gorontalo,Sumatera Utara,5667
+Gorontalo,Sumatera Barat,2002
+Gorontalo,Riau,2957
+Gorontalo,Jambi,1348
+Gorontalo,Sumatera Selatan,3697
+Sulawesi Barat,Aceh,1790
+Sulawesi Barat,Sumatera Utara,4876
+Sulawesi Barat,Sumatera Barat,1671
+Sulawesi Barat,Riau,2510
+Sulawesi Barat,Jambi,1174
+Sulawesi Barat,Sumatera Selatan,2980
+Maluku,Aceh,2724
+Maluku,Sumatera Utara,8715
+Maluku,Sumatera Barat,5646
+Maluku,Riau,5282
+Maluku,Jambi,2384
+Maluku,Sumatera Selatan,5903
+Maluku Utara,Aceh,2416
+Maluku Utara,Sumatera Utara,8385
+Maluku Utara,Sumatera Barat,11703
+Maluku Utara,Riau,5337
+Maluku Utara,Jambi,2209
+Maluku Utara,Sumatera Selatan,5661
+Papua Barat,Aceh,540
+Papua Barat,Sumatera Utara,1974
+Papua Barat,Sumatera Barat,577
+Papua Barat,Riau,931
+Papua Barat,Jambi,480
+Papua Barat,Sumatera Selatan,1271
+Papua Barat Daya,Aceh,484
+Papua Barat Daya,Sumatera Utara,2119
+Papua Barat Daya,Sumatera Barat,764
+Papua Barat Daya,Riau,839
+Papua Barat Daya,Jambi,1798
+Papua Barat Daya,Sumatera Selatan,1358
+Papua,Aceh,1020
+Papua,Sumatera Utara,4032
+Papua,Sumatera Barat,1220
+Papua,Riau,1940
+Papua,Jambi,844
+Papua,Sumatera Selatan,2098
+Papua Selatan,Aceh,407
+Papua Selatan,Sumatera Utara,1304
+Papua Selatan,Sumatera Barat,380
+Papua Selatan,Riau,612
+Papua Selatan,Jambi,299
+Papua Selatan,Sumatera Selatan,843
+Papua Tengah,Aceh,1760
+Papua Tengah,Sumatera Utara,6315
+Papua Tengah,Sumatera Barat,208
+Papua Tengah,Riau,3030
+Papua Tengah,Jambi,1456
+Papua Tengah,Sumatera Selatan,3520
+Papua Pegunungan,Aceh,1249
+Papua Pegunungan,Sumatera Utara,3880
+Papua Pegunungan,Sumatera Barat,1273
+Papua Pegunungan,Riau,1898
+Papua Pegunungan,Jambi,893
+Papua Pegunungan,Sumatera Selatan,2294
+Aceh,Bengkulu,5367
+Aceh,Lampung,12480
+Aceh,Kepulauan Bangka Belitung,1750
+Aceh,Kepulauan Riau,18874
+Aceh,DKI Jakarta,99104
+Aceh,Jawa Barat,96399
+Sumatera Utara,Bengkulu,29660
+Sumatera Utara,Lampung,56979
+Sumatera Utara,Kepulauan Bangka Belitung,8514
+Sumatera Utara,Kepulauan Riau,179685
+Sumatera Utara,DKI Jakarta,427096
+Sumatera Utara,Jawa Barat,378818
+Sumatera Barat,Bengkulu,232049
+Sumatera Barat,Lampung,36128
+Sumatera Barat,Kepulauan Bangka Belitung,4452
+Sumatera Barat,Kepulauan Riau,92128
+Sumatera Barat,DKI Jakarta,241655
+Sumatera Barat,Jawa Barat,244915
+Riau,Bengkulu,25023
+Riau,Lampung,47375
+Riau,Kepulauan Bangka Belitung,5778
+Riau,Kepulauan Riau,471642
+Riau,DKI Jakarta,233771
+Riau,Jawa Barat,214038
+Jambi,Bengkulu,100460
+Jambi,Lampung,96625
+Jambi,Kepulauan Bangka Belitung,8403
+Jambi,Kepulauan Riau,62321
+Jambi,DKI Jakarta,149957
+Jambi,Jawa Barat,142979
+Sumatera Selatan,Bengkulu,869061
+Sumatera Selatan,Lampung,1894896
+Sumatera Selatan,Kepulauan Bangka Belitung,188042
+Sumatera Selatan,Kepulauan Riau,70327
+Sumatera Selatan,DKI Jakarta,566943
+Sumatera Selatan,Jawa Barat,579954
+Bengkulu,Bengkulu,5444333
+Bengkulu,Lampung,122271
+Bengkulu,Kepulauan Bangka Belitung,3710
+Bengkulu,Kepulauan Riau,6646
+Bengkulu,DKI Jakarta,103036
+Bengkulu,Jawa Barat,96439
+Lampung,Bengkulu,170252
+Lampung,Lampung,21723532
+Lampung,Kepulauan Bangka Belitung,37345
+Lampung,Kepulauan Riau,25493
+Lampung,DKI Jakarta,865943
+Lampung,Jawa Barat,1044849
+Kepulauan Bangka Belitung,Bengkulu,6944
+Kepulauan Bangka Belitung,Lampung,43834
+Kepulauan Bangka Belitung,Kepulauan Bangka Belitung,3922665
+Kepulauan Bangka Belitung,Kepulauan Riau,21854
+Kepulauan Bangka Belitung,DKI Jakarta,189286
+Kepulauan Bangka Belitung,Jawa Barat,16992
+Kepulauan Riau,Bengkulu,6485
+Kepulauan Riau,Lampung,21919
+Kepulauan Riau,Kepulauan Bangka Belitung,10739
+Kepulauan Riau,Kepulauan Riau,2485233
+Kepulauan Riau,DKI Jakarta,152047
+Kepulauan Riau,Jawa Barat,121284
+DKI Jakarta,Bengkulu,58925
+DKI Jakarta,Lampung,675895
+DKI Jakarta,Kepulauan Bangka Belitung,108837
+DKI Jakarta,Kepulauan Riau,214504
+DKI Jakarta,DKI Jakarta,35634138
+DKI Jakarta,Jawa Barat,35332676
+Jawa Barat,Bengkulu,100311
+Jawa Barat,Lampung,801748
+Jawa Barat,Kepulauan Bangka Belitung,81748
+Jawa Barat,Kepulauan Riau,205342
+Jawa Barat,DKI Jakarta,34524450
+Jawa Barat,Jawa Barat,143707592
+Jawa Tengah,Bengkulu,34190
+Jawa Tengah,Lampung,195786
+Jawa Tengah,Kepulauan Bangka Belitung,20346
+Jawa Tengah,Kepulauan Riau,79006
+Jawa Tengah,DKI Jakarta,3750380
+Jawa Tengah,Jawa Barat,6933214
+DI Yogyakarta,Bengkulu,15704
+DI Yogyakarta,Lampung,62013
+DI Yogyakarta,Kepulauan Bangka Belitung,9045
+DI Yogyakarta,Kepulauan Riau,7458
+DI Yogyakarta,DKI Jakarta,556260
+DI Yogyakarta,Jawa Barat,831521
+Jawa Timur,Bengkulu,22379
+Jawa Timur,Lampung,13736
+Jawa Timur,Kepulauan Bangka Belitung,15795
+Jawa Timur,Kepulauan Riau,83698
+Jawa Timur,DKI Jakarta,1699159
+Jawa Timur,Jawa Barat,1863008
+Banten,Bengkulu,46412
+Banten,Lampung,1040741
+Banten,Kepulauan Bangka Belitung,58034
+Banten,Kepulauan Riau,113568
+Banten,DKI Jakarta,18048547
+Banten,Jawa Barat,18477108
+Bali,Bengkulu,3519
+Bali,Lampung,22419
+Bali,Kepulauan Bangka Belitung,2480
+Bali,Kepulauan Riau,15088
+Bali,DKI Jakarta,318380
+Bali,Jawa Barat,275419
+Nusa Tenggara Barat,Bengkulu,3953
+Nusa Tenggara Barat,Lampung,12878
+Nusa Tenggara Barat,Kepulauan Bangka Belitung,3344
+Nusa Tenggara Barat,Kepulauan Riau,13498
+Nusa Tenggara Barat,DKI Jakarta,174086
+Nusa Tenggara Barat,Jawa Barat,160831
+Nusa Tenggara Timur,Bengkulu,5100
+Nusa Tenggara Timur,Lampung,12333
+Nusa Tenggara Timur,Kepulauan Bangka Belitung,1770
+Nusa Tenggara Timur,Kepulauan Riau,9382
+Nusa Tenggara Timur,DKI Jakarta,90369
+Nusa Tenggara Timur,Jawa Barat,89167
+Kalimantan Barat,Bengkulu,3910
+Kalimantan Barat,Lampung,12897
+Kalimantan Barat,Kepulauan Bangka Belitung,4156
+Kalimantan Barat,Kepulauan Riau,36281
+Kalimantan Barat,DKI Jakarta,157589
+Kalimantan Barat,Jawa Barat,118341
+Kalimantan Tengah,Bengkulu,2978
+Kalimantan Tengah,Lampung,10256
+Kalimantan Tengah,Kepulauan Bangka Belitung,1148
+Kalimantan Tengah,Kepulauan Riau,5973
+Kalimantan Tengah,DKI Jakarta,96045
+Kalimantan Tengah,Jawa Barat,84078
+Kalimantan Selatan,Bengkulu,2975
+Kalimantan Selatan,Lampung,9363
+Kalimantan Selatan,Kepulauan Bangka Belitung,1982
+Kalimantan Selatan,Kepulauan Riau,7877
+Kalimantan Selatan,DKI Jakarta,208515
+Kalimantan Selatan,Jawa Barat,123872
+Kalimantan Timur,Bengkulu,4491
+Kalimantan Timur,Lampung,16322
+Kalimantan Timur,Kepulauan Bangka Belitung,2844
+Kalimantan Timur,Kepulauan Riau,13640
+Kalimantan Timur,DKI Jakarta,236286
+Kalimantan Timur,Jawa Barat,199292
+Kalimantan Utara,Bengkulu,795
+Kalimantan Utara,Lampung,2628
+Kalimantan Utara,Kepulauan Bangka Belitung,369
+Kalimantan Utara,Kepulauan Riau,1713
+Kalimantan Utara,DKI Jakarta,29094
+Kalimantan Utara,Jawa Barat,23583
+Sulawesi Utara,Bengkulu,1361
+Sulawesi Utara,Lampung,3883
+Sulawesi Utara,Kepulauan Bangka Belitung,615
+Sulawesi Utara,Kepulauan Riau,4335
+Sulawesi Utara,DKI Jakarta,102852
+Sulawesi Utara,Jawa Barat,53592
+Sulawesi Tengah,Bengkulu,2410
+Sulawesi Tengah,Lampung,7083
+Sulawesi Tengah,Kepulauan Bangka Belitung,1017
+Sulawesi Tengah,Kepulauan Riau,6415
+Sulawesi Tengah,DKI Jakarta,83422
+Sulawesi Tengah,Jawa Barat,64263
+Sulawesi Selatan,Bengkulu,4065
+Sulawesi Selatan,Lampung,13010
+Sulawesi Selatan,Kepulauan Bangka Belitung,2868
+Sulawesi Selatan,Kepulauan Riau,16556
+Sulawesi Selatan,DKI Jakarta,294387
+Sulawesi Selatan,Jawa Barat,170386
+Sulawesi Tenggara,Bengkulu,1567
+Sulawesi Tenggara,Lampung,3998
+Sulawesi Tenggara,Kepulauan Bangka Belitung,786
+Sulawesi Tenggara,Kepulauan Riau,3803
+Sulawesi Tenggara,DKI Jakarta,86662
+Sulawesi Tenggara,Jawa Barat,43540
+Gorontalo,Bengkulu,809
+Gorontalo,Lampung,2236
+Gorontalo,Kepulauan Bangka Belitung,338
+Gorontalo,Kepulauan Riau,1101
+Gorontalo,DKI Jakarta,29980
+Gorontalo,Jawa Barat,20908
+Sulawesi Barat,Bengkulu,727
+Sulawesi Barat,Lampung,1822
+Sulawesi Barat,Kepulauan Bangka Belitung,252
+Sulawesi Barat,Kepulauan Riau,1110
+Sulawesi Barat,DKI Jakarta,17764
+Sulawesi Barat,Jawa Barat,15597
+Maluku,Bengkulu,1509
+Maluku,Lampung,3736
+Maluku,Kepulauan Bangka Belitung,401
+Maluku,Kepulauan Riau,2250
+Maluku,DKI Jakarta,54443
+Maluku,Jawa Barat,32296
+Maluku Utara,Bengkulu,1404
+Maluku Utara,Lampung,3636
+Maluku Utara,Kepulauan Bangka Belitung,463
+Maluku Utara,Kepulauan Riau,2690
+Maluku Utara,DKI Jakarta,42869
+Maluku Utara,Jawa Barat,30696
+Papua Barat,Bengkulu,278
+Papua Barat,Lampung,751
+Papua Barat,Kepulauan Bangka Belitung,113
+Papua Barat,Kepulauan Riau,719
+Papua Barat,DKI Jakarta,21023
+Papua Barat,Jawa Barat,11830
+Papua Barat Daya,Bengkulu,251
+Papua Barat Daya,Lampung,794
+Papua Barat Daya,Kepulauan Bangka Belitung,109
+Papua Barat Daya,Kepulauan Riau,596
+Papua Barat Daya,DKI Jakarta,24348
+Papua Barat Daya,Jawa Barat,10364
+Papua,Bengkulu,501
+Papua,Lampung,1326
+Papua,Kepulauan Bangka Belitung,189
+Papua,Kepulauan Riau,1187
+Papua,DKI Jakarta,40035
+Papua,Jawa Barat,17299
+Papua Selatan,Bengkulu,2
+Papua Selatan,Lampung,440
+Papua Selatan,Kepulauan Bangka Belitung,49
+Papua Selatan,Kepulauan Riau,364
+Papua Selatan,DKI Jakarta,9468
+Papua Selatan,Jawa Barat,4767
+Papua Tengah,Bengkulu,835
+Papua Tengah,Lampung,2343
+Papua Tengah,Kepulauan Bangka Belitung,360
+Papua Tengah,Kepulauan Riau,1713
+Papua Tengah,DKI Jakarta,29800
+Papua Tengah,Jawa Barat,23020
+Papua Pegunungan,Bengkulu,577
+Papua Pegunungan,Lampung,1468
+Papua Pegunungan,Kepulauan Bangka Belitung,193
+Papua Pegunungan,Kepulauan Riau,600
+Papua Pegunungan,DKI Jakarta,7803
+Papua Pegunungan,Jawa Barat,7994
+Aceh,Jawa Tengah,41159
+Aceh,DI Yogyakarta,4377
+Aceh,Jawa Timur,57964
+Aceh,Banten,29718
+Aceh,Bali,6692
+Aceh,Nusa Tenggara Barat,3689
+Sumatera Utara,Jawa Tengah,136087
+Sumatera Utara,DI Yogyakarta,67005
+Sumatera Utara,Jawa Timur,199216
+Sumatera Utara,Banten,182487
+Sumatera Utara,Bali,50558
+Sumatera Utara,Nusa Tenggara Barat,10399
+Sumatera Barat,Jawa Tengah,72950
+Sumatera Barat,DI Yogyakarta,30404
+Sumatera Barat,Jawa Timur,81498
+Sumatera Barat,Banten,93003
+Sumatera Barat,Bali,11103
+Sumatera Barat,Nusa Tenggara Barat,4158
+Riau,Jawa Tengah,134940
+Riau,DI Yogyakarta,65518
+Riau,Jawa Timur,181795
+Riau,Banten,79450
+Riau,Bali,15696
+Riau,Nusa Tenggara Barat,5610
+Jambi,Jawa Tengah,120532
+Jambi,DI Yogyakarta,45927
+Jambi,Jawa Timur,86920
+Jambi,Banten,65076
+Jambi,Bali,8584
+Jambi,Nusa Tenggara Barat,3092
+Sumatera Selatan,Jawa Tengah,313093
+Sumatera Selatan,DI Yogyakarta,167157
+Sumatera Selatan,Jawa Timur,292236
+Sumatera Selatan,Banten,314368
+Sumatera Selatan,Bali,40863
+Sumatera Selatan,Nusa Tenggara Barat,8157
+Bengkulu,Jawa Tengah,46920
+Bengkulu,DI Yogyakarta,26361
+Bengkulu,Jawa Timur,42789
+Bengkulu,Banten,40991
+Bengkulu,Bali,5307
+Bengkulu,Nusa Tenggara Barat,1383
+Lampung,Jawa Tengah,432442
+Lampung,DI Yogyakarta,230438
+Lampung,Jawa Timur,411907
+Lampung,Banten,992123
+Lampung,Bali,45128
+Lampung,Nusa Tenggara Barat,6031
+Kepulauan Bangka Belitung,Jawa Tengah,59169
+Kepulauan Bangka Belitung,DI Yogyakarta,34086
+Kepulauan Bangka Belitung,Jawa Timur,2634
+Kepulauan Bangka Belitung,Banten,73208
+Kepulauan Bangka Belitung,Bali,6790
+Kepulauan Bangka Belitung,Nusa Tenggara Barat,2754
+Kepulauan Riau,Jawa Tengah,103198
+Kepulauan Riau,DI Yogyakarta,31030
+Kepulauan Riau,Jawa Timur,135282
+Kepulauan Riau,Banten,56381
+Kepulauan Riau,Bali,14962
+Kepulauan Riau,Nusa Tenggara Barat,3406
+DKI Jakarta,Jawa Tengah,7345406
+DKI Jakarta,DI Yogyakarta,1543739
+DKI Jakarta,Jawa Timur,3076945
+DKI Jakarta,Banten,14236682
+DKI Jakarta,Bali,607968
+DKI Jakarta,Nusa Tenggara Barat,82890
+Jawa Barat,Jawa Tengah,13845266
+Jawa Barat,DI Yogyakarta,3299856
+Jawa Barat,Jawa Timur,4621482
+Jawa Barat,Banten,13473760
+Jawa Barat,Bali,575644
+Jawa Barat,Nusa Tenggara Barat,107005
+Jawa Tengah,Jawa Tengah,99587387
+Jawa Tengah,DI Yogyakarta,13673261
+Jawa Tengah,Jawa Timur,12862711
+Jawa Tengah,Banten,1982485
+Jawa Tengah,Bali,562189
+Jawa Tengah,Nusa Tenggara Barat,64151
+DI Yogyakarta,Jawa Tengah,9887961
+DI Yogyakarta,DI Yogyakarta,16363933
+DI Yogyakarta,Jawa Timur,2149522
+DI Yogyakarta,Banten,227908
+DI Yogyakarta,Bali,144255
+DI Yogyakarta,Nusa Tenggara Barat,22058
+Jawa Timur,Jawa Tengah,8125819
+Jawa Timur,DI Yogyakarta,3272478
+Jawa Timur,Jawa Timur,183362302
+Jawa Timur,Banten,681244
+Jawa Timur,Bali,2331600
+Jawa Timur,Nusa Tenggara Barat,297088
+Banten,Jawa Tengah,4168302
+Banten,DI Yogyakarta,973955
+Banten,Jawa Timur,1815605
+Banten,Banten,29352170
+Banten,Bali,282446
+Banten,Nusa Tenggara Barat,47516
+Bali,Jawa Tengah,422989
+Bali,DI Yogyakarta,147890
+Bali,Jawa Timur,4223806
+Bali,Banten,99468
+Bali,Bali,20911166
+Bali,Nusa Tenggara Barat,347009
+Nusa Tenggara Barat,Jawa Tengah,157014
+Nusa Tenggara Barat,DI Yogyakarta,79889
+Nusa Tenggara Barat,Jawa Timur,763211
+Nusa Tenggara Barat,Banten,69333
+Nusa Tenggara Barat,Bali,559095
+Nusa Tenggara Barat,Nusa Tenggara Barat,13691020
+Nusa Tenggara Timur,Jawa Tengah,72386
+Nusa Tenggara Timur,DI Yogyakarta,25092
+Nusa Tenggara Timur,Jawa Timur,237774
+Nusa Tenggara Timur,Banten,28473
+Nusa Tenggara Timur,Bali,93987
+Nusa Tenggara Timur,Nusa Tenggara Barat,52587
+Kalimantan Barat,Jawa Tengah,116297
+Kalimantan Barat,DI Yogyakarta,49351
+Kalimantan Barat,Jawa Timur,147937
+Kalimantan Barat,Banten,67197
+Kalimantan Barat,Bali,18959
+Kalimantan Barat,Nusa Tenggara Barat,6008
+Kalimantan Tengah,Jawa Tengah,221948
+Kalimantan Tengah,DI Yogyakarta,2325
+Kalimantan Tengah,Jawa Timur,316688
+Kalimantan Tengah,Banten,35294
+Kalimantan Tengah,Bali,199018
+Kalimantan Tengah,Nusa Tenggara Barat,8876
+Kalimantan Selatan,Jawa Tengah,174066
+Kalimantan Selatan,DI Yogyakarta,93337
+Kalimantan Selatan,Jawa Timur,539622
+Kalimantan Selatan,Banten,78875
+Kalimantan Selatan,Bali,5239
+Kalimantan Selatan,Nusa Tenggara Barat,10623
+Kalimantan Timur,Jawa Tengah,296328
+Kalimantan Timur,DI Yogyakarta,123796
+Kalimantan Timur,Jawa Timur,684226
+Kalimantan Timur,Banten,87979
+Kalimantan Timur,Bali,63598
+Kalimantan Timur,Nusa Tenggara Barat,16045
+Kalimantan Utara,Jawa Tengah,23442
+Kalimantan Utara,DI Yogyakarta,10904
+Kalimantan Utara,Jawa Timur,63026
+Kalimantan Utara,Banten,8733
+Kalimantan Utara,Bali,3318
+Kalimantan Utara,Nusa Tenggara Barat,1668
+Sulawesi Utara,Jawa Tengah,30525
+Sulawesi Utara,DI Yogyakarta,1816
+Sulawesi Utara,Jawa Timur,66011
+Sulawesi Utara,Banten,27977
+Sulawesi Utara,Bali,32558
+Sulawesi Utara,Nusa Tenggara Barat,2000
+Sulawesi Tengah,Jawa Tengah,48396
+Sulawesi Tengah,DI Yogyakarta,19209
+Sulawesi Tengah,Jawa Timur,103714
+Sulawesi Tengah,Banten,34596
+Sulawesi Tengah,Bali,16668
+Sulawesi Tengah,Nusa Tenggara Barat,4665
+Sulawesi Selatan,Jawa Tengah,114842
+Sulawesi Selatan,DI Yogyakarta,70037
+Sulawesi Selatan,Jawa Timur,320389
+Sulawesi Selatan,Banten,83322
+Sulawesi Selatan,Bali,91542
+Sulawesi Selatan,Nusa Tenggara Barat,24857
+Sulawesi Tenggara,Jawa Tengah,30375
+Sulawesi Tenggara,DI Yogyakarta,15855
+Sulawesi Tenggara,Jawa Timur,67820
+Sulawesi Tenggara,Banten,22937
+Sulawesi Tenggara,Bali,11034
+Sulawesi Tenggara,Nusa Tenggara Barat,2462
+Gorontalo,Jawa Tengah,11096
+Gorontalo,DI Yogyakarta,5328
+Gorontalo,Jawa Timur,25404
+Gorontalo,Banten,7852
+Gorontalo,Bali,2812
+Gorontalo,Nusa Tenggara Barat,1041
+Sulawesi Barat,Jawa Tengah,11516
+Sulawesi Barat,DI Yogyakarta,4638
+Sulawesi Barat,Jawa Timur,20699
+Sulawesi Barat,Banten,4928
+Sulawesi Barat,Bali,4426
+Sulawesi Barat,Nusa Tenggara Barat,1431
+Maluku,Jawa Tengah,19251
+Maluku,DI Yogyakarta,6398
+Maluku,Jawa Timur,46749
+Maluku,Banten,10366
+Maluku,Bali,3945
+Maluku,Nusa Tenggara Barat,1283
+Maluku Utara,Jawa Tengah,23674
+Maluku Utara,DI Yogyakarta,7967
+Maluku Utara,Jawa Timur,41783
+Maluku Utara,Banten,11611
+Maluku Utara,Bali,2809
+Maluku Utara,Nusa Tenggara Barat,1415
+Papua Barat,Jawa Tengah,9403
+Papua Barat,DI Yogyakarta,4182
+Papua Barat,Jawa Timur,18595
+Papua Barat,Banten,3765
+Papua Barat,Bali,1758
+Papua Barat,Nusa Tenggara Barat,438
+Papua Barat Daya,Jawa Tengah,9061
+Papua Barat Daya,DI Yogyakarta,4998
+Papua Barat Daya,Jawa Timur,24253
+Papua Barat Daya,Banten,4101
+Papua Barat Daya,Bali,3365
+Papua Barat Daya,Nusa Tenggara Barat,2318
+Papua,Jawa Tengah,13181
+Papua,DI Yogyakarta,7390
+Papua,Jawa Timur,28644
+Papua,Banten,6689
+Papua,Bali,3375
+Papua,Nusa Tenggara Barat,890
+Papua Selatan,Jawa Tengah,4024
+Papua Selatan,DI Yogyakarta,2779
+Papua Selatan,Jawa Timur,9547
+Papua Selatan,Banten,1545
+Papua Selatan,Bali,797
+Papua Selatan,Nusa Tenggara Barat,318
+Papua Tengah,Jawa Tengah,18526
+Papua Tengah,DI Yogyakarta,8707
+Papua Tengah,Jawa Timur,37799
+Papua Tengah,Banten,8662
+Papua Tengah,Bali,5204
+Papua Tengah,Nusa Tenggara Barat,1659
+Papua Pegunungan,Jawa Tengah,4926
+Papua Pegunungan,DI Yogyakarta,1484
+Papua Pegunungan,Jawa Timur,9147
+Papua Pegunungan,Banten,2125
+Papua Pegunungan,Bali,1151
+Papua Pegunungan,Nusa Tenggara Barat,500
+Aceh,Nusa Tenggara Timur,7255
+Aceh,Kalimantan Barat,3852
+Aceh,Kalimantan Tengah,3182
+Aceh,Kalimantan Selatan,3400
+Aceh,Kalimantan Timur,7005
+Aceh,Kalimantan Utara,1011
+Sumatera Utara,Nusa Tenggara Timur,19879
+Sumatera Utara,Kalimantan Barat,22673
+Sumatera Utara,Kalimantan Tengah,20738
+Sumatera Utara,Kalimantan Selatan,14199
+Sumatera Utara,Kalimantan Timur,32802
+Sumatera Utara,Kalimantan Utara,4662
+Sumatera Barat,Nusa Tenggara Timur,7511
+Sumatera Barat,Kalimantan Barat,5456
+Sumatera Barat,Kalimantan Tengah,4673
+Sumatera Barat,Kalimantan Selatan,4874
+Sumatera Barat,Kalimantan Timur,9463
+Sumatera Barat,Kalimantan Utara,1381
+Riau,Nusa Tenggara Timur,10605
+Riau,Kalimantan Barat,10717
+Riau,Kalimantan Tengah,8332
+Riau,Kalimantan Selatan,7193
+Riau,Kalimantan Timur,16658
+Riau,Kalimantan Utara,2612
+Jambi,Nusa Tenggara Timur,4881
+Jambi,Kalimantan Barat,4349
+Jambi,Kalimantan Tengah,4135
+Jambi,Kalimantan Selatan,3692
+Jambi,Kalimantan Timur,6633
+Jambi,Kalimantan Utara,892
+Sumatera Selatan,Nusa Tenggara Timur,12949
+Sumatera Selatan,Kalimantan Barat,12106
+Sumatera Selatan,Kalimantan Tengah,10110
+Sumatera Selatan,Kalimantan Selatan,10572
+Sumatera Selatan,Kalimantan Timur,26702
+Sumatera Selatan,Kalimantan Utara,3438
+Bengkulu,Nusa Tenggara Timur,3144
+Bengkulu,Kalimantan Barat,1871
+Bengkulu,Kalimantan Tengah,2192
+Bengkulu,Kalimantan Selatan,1746
+Bengkulu,Kalimantan Timur,3603
+Bengkulu,Kalimantan Utara,546
+Lampung,Nusa Tenggara Timur,8744
+Lampung,Kalimantan Barat,12331
+Lampung,Kalimantan Tengah,12345
+Lampung,Kalimantan Selatan,8066
+Lampung,Kalimantan Timur,1771
+Lampung,Kalimantan Utara,2229
+Kepulauan Bangka Belitung,Nusa Tenggara Timur,2422
+Kepulauan Bangka Belitung,Kalimantan Barat,12744
+Kepulauan Bangka Belitung,Kalimantan Tengah,2667
+Kepulauan Bangka Belitung,Kalimantan Selatan,2875
+Kepulauan Bangka Belitung,Kalimantan Timur,4677
+Kepulauan Bangka Belitung,Kalimantan Utara,570
+Kepulauan Riau,Nusa Tenggara Timur,6514
+Kepulauan Riau,Kalimantan Barat,31875
+Kepulauan Riau,Kalimantan Tengah,4451
+Kepulauan Riau,Kalimantan Selatan,4506
+Kepulauan Riau,Kalimantan Timur,12451
+Kepulauan Riau,Kalimantan Utara,1278
+DKI Jakarta,Nusa Tenggara Timur,68496
+DKI Jakarta,Kalimantan Barat,194087
+DKI Jakarta,Kalimantan Tengah,73319
+DKI Jakarta,Kalimantan Selatan,91545
+DKI Jakarta,Kalimantan Timur,224787
+DKI Jakarta,Kalimantan Utara,21508
+Jawa Barat,Nusa Tenggara Timur,78384
+Jawa Barat,Kalimantan Barat,185344
+Jawa Barat,Kalimantan Tengah,108137
+Jawa Barat,Kalimantan Selatan,113327
+Jawa Barat,Kalimantan Timur,287083
+Jawa Barat,Kalimantan Utara,30599
+Jawa Tengah,Nusa Tenggara Timur,41815
+Jawa Tengah,Kalimantan Barat,90251
+Jawa Tengah,Kalimantan Tengah,150032
+Jawa Tengah,Kalimantan Selatan,91032
+Jawa Tengah,Kalimantan Timur,189256
+Jawa Tengah,Kalimantan Utara,16287
+DI Yogyakarta,Nusa Tenggara Timur,13433
+DI Yogyakarta,Kalimantan Barat,31869
+DI Yogyakarta,Kalimantan Tengah,29508
+DI Yogyakarta,Kalimantan Selatan,20459
+DI Yogyakarta,Kalimantan Timur,52885
+DI Yogyakarta,Kalimantan Utara,5907
+Jawa Timur,Nusa Tenggara Timur,180008
+Jawa Timur,Kalimantan Barat,91902
+Jawa Timur,Kalimantan Tengah,181794
+Jawa Timur,Kalimantan Selatan,196381
+Jawa Timur,Kalimantan Timur,360248
+Jawa Timur,Kalimantan Utara,33569
+Banten,Nusa Tenggara Timur,34448
+Banten,Kalimantan Barat,91455
+Banten,Kalimantan Tengah,41919
+Banten,Kalimantan Selatan,59155
+Banten,Kalimantan Timur,137551
+Banten,Kalimantan Utara,12578
+Bali,Nusa Tenggara Timur,108151
+Bali,Kalimantan Barat,11091
+Bali,Kalimantan Tengah,9324
+Bali,Kalimantan Selatan,10743
+Bali,Kalimantan Timur,25399
+Bali,Kalimantan Utara,1762
+Nusa Tenggara Barat,Nusa Tenggara Timur,95474
+Nusa Tenggara Barat,Kalimantan Barat,15581
+Nusa Tenggara Barat,Kalimantan Tengah,21906
+Nusa Tenggara Barat,Kalimantan Selatan,16642
+Nusa Tenggara Barat,Kalimantan Timur,34703
+Nusa Tenggara Barat,Kalimantan Utara,5323
+Nusa Tenggara Timur,Nusa Tenggara Timur,9558961
+Nusa Tenggara Timur,Kalimantan Barat,6039
+Nusa Tenggara Timur,Kalimantan Tengah,9882
+Nusa Tenggara Timur,Kalimantan Selatan,6161
+Nusa Tenggara Timur,Kalimantan Timur,22543
+Nusa Tenggara Timur,Kalimantan Utara,4914
+Kalimantan Barat,Nusa Tenggara Timur,7800
+Kalimantan Barat,Kalimantan Barat,12104918
+Kalimantan Barat,Kalimantan Tengah,291054
+Kalimantan Barat,Kalimantan Selatan,18703
+Kalimantan Barat,Kalimantan Timur,41721
+Kalimantan Barat,Kalimantan Utara,2518
+Kalimantan Tengah,Nusa Tenggara Timur,8707
+Kalimantan Tengah,Kalimantan Barat,181492
+Kalimantan Tengah,Kalimantan Tengah,7859480
+Kalimantan Tengah,Kalimantan Selatan,1628123
+Kalimantan Tengah,Kalimantan Timur,84361
+Kalimantan Tengah,Kalimantan Utara,2662
+Kalimantan Selatan,Nusa Tenggara Timur,6782
+Kalimantan Selatan,Kalimantan Barat,31659
+Kalimantan Selatan,Kalimantan Tengah,2291148
+Kalimantan Selatan,Kalimantan Selatan,16012669
+Kalimantan Selatan,Kalimantan Timur,694984
+Kalimantan Selatan,Kalimantan Utara,8467
+Kalimantan Timur,Nusa Tenggara Timur,20103
+Kalimantan Timur,Kalimantan Barat,23739
+Kalimantan Timur,Kalimantan Tengah,16309
+Kalimantan Timur,Kalimantan Selatan,610197
+Kalimantan Timur,Kalimantan Timur,12693212
+Kalimantan Timur,Kalimantan Utara,216508
+Kalimantan Utara,Nusa Tenggara Timur,417
+Kalimantan Utara,Kalimantan Barat,2043
+Kalimantan Utara,Kalimantan Tengah,2732
+Kalimantan Utara,Kalimantan Selatan,7347
+Kalimantan Utara,Kalimantan Timur,245042
+Kalimantan Utara,Kalimantan Utara,1232601
+Sulawesi Utara,Nusa Tenggara Timur,3472
+Sulawesi Utara,Kalimantan Barat,2714
+Sulawesi Utara,Kalimantan Tengah,3382
+Sulawesi Utara,Kalimantan Selatan,3211
+Sulawesi Utara,Kalimantan Timur,20079
+Sulawesi Utara,Kalimantan Utara,1773
+Sulawesi Tengah,Nusa Tenggara Timur,5051
+Sulawesi Tengah,Kalimantan Barat,8487
+Sulawesi Tengah,Kalimantan Tengah,3548
+Sulawesi Tengah,Kalimantan Selatan,6138
+Sulawesi Tengah,Kalimantan Timur,57751
+Sulawesi Tengah,Kalimantan Utara,12149
+Sulawesi Selatan,Nusa Tenggara Timur,49098
+Sulawesi Selatan,Kalimantan Barat,17283
+Sulawesi Selatan,Kalimantan Tengah,21016
+Sulawesi Selatan,Kalimantan Selatan,46223
+Sulawesi Selatan,Kalimantan Timur,288798
+Sulawesi Selatan,Kalimantan Utara,60361
+Sulawesi Tenggara,Nusa Tenggara Timur,6268
+Sulawesi Tenggara,Kalimantan Barat,2538
+Sulawesi Tenggara,Kalimantan Tengah,2597
+Sulawesi Tenggara,Kalimantan Selatan,4320
+Sulawesi Tenggara,Kalimantan Timur,17870
+Sulawesi Tenggara,Kalimantan Utara,2801
+Gorontalo,Nusa Tenggara Timur,1691
+Gorontalo,Kalimantan Barat,748
+Gorontalo,Kalimantan Tengah,895
+Gorontalo,Kalimantan Selatan,1051
+Gorontalo,Kalimantan Timur,459
+Gorontalo,Kalimantan Utara,1266
+Sulawesi Barat,Nusa Tenggara Timur,2098
+Sulawesi Barat,Kalimantan Barat,1144
+Sulawesi Barat,Kalimantan Tengah,1551
+Sulawesi Barat,Kalimantan Selatan,6522
+Sulawesi Barat,Kalimantan Timur,44148
+Sulawesi Barat,Kalimantan Utara,3756
+Maluku,Nusa Tenggara Timur,9791
+Maluku,Kalimantan Barat,1469
+Maluku,Kalimantan Tengah,1235
+Maluku,Kalimantan Selatan,1372
+Maluku,Kalimantan Timur,3222
+Maluku,Kalimantan Utara,456
+Maluku Utara,Nusa Tenggara Timur,9791
+Maluku Utara,Kalimantan Barat,1469
+Maluku Utara,Kalimantan Tengah,1235
+Maluku Utara,Kalimantan Selatan,1372
+Maluku Utara,Kalimantan Timur,3222
+Maluku Utara,Kalimantan Utara,456
+Papua Barat,Nusa Tenggara Timur,1247
+Papua Barat,Kalimantan Barat,428
+Papua Barat,Kalimantan Tengah,328
+Papua Barat,Kalimantan Selatan,274
+Papua Barat,Kalimantan Timur,1154
+Papua Barat,Kalimantan Utara,101
+Papua Barat Daya,Nusa Tenggara Timur,1653
+Papua Barat Daya,Kalimantan Barat,435
+Papua Barat Daya,Kalimantan Tengah,999
+Papua Barat Daya,Kalimantan Selatan,494
+Papua Barat Daya,Kalimantan Timur,1537
+Papua Barat Daya,Kalimantan Utara,333
+Papua,Nusa Tenggara Timur,2108
+Papua,Kalimantan Barat,1
+Papua,Kalimantan Tengah,634
+Papua,Kalimantan Selatan,641
+Papua,Kalimantan Timur,1769
+Papua,Kalimantan Utara,256
+Papua Selatan,Nusa Tenggara Timur,1071
+Papua Selatan,Kalimantan Barat,217
+Papua Selatan,Kalimantan Tengah,207
+Papua Selatan,Kalimantan Selatan,354
+Papua Selatan,Kalimantan Timur,612
+Papua Selatan,Kalimantan Utara,7
+Papua Tengah,Nusa Tenggara Timur,3770
+Papua Tengah,Kalimantan Barat,792
+Papua Tengah,Kalimantan Tengah,750
+Papua Tengah,Kalimantan Selatan,743
+Papua Tengah,Kalimantan Timur,3946
+Papua Tengah,Kalimantan Utara,304
+Papua Pegunungan,Nusa Tenggara Timur,1483
+Papua Pegunungan,Kalimantan Barat,634
+Papua Pegunungan,Kalimantan Tengah,458
+Papua Pegunungan,Kalimantan Selatan,392
+Papua Pegunungan,Kalimantan Timur,650
+Papua Pegunungan,Kalimantan Utara,178
+Aceh,Sulawesi Utara,3455
+Aceh,Sulawesi Tengah,6505
+Aceh,Sulawesi Selatan,13330
+Aceh,Sulawesi Tenggara,6140
+Aceh,Gorontalo,1886
+Aceh,Sulawesi Barat,2315
+Aceh,Maluku,518
+Sumatera Utara,Sulawesi Utara,12520
+Sumatera Utara,Sulawesi Tengah,20345
+Sumatera Utara,Sulawesi Selatan,36494
+Sumatera Utara,Sulawesi Tenggara,14863
+Sumatera Utara,Gorontalo,5100
+Sumatera Utara,Sulawesi Barat,6105
+Sumatera Utara,Maluku,2704
+Sumatera Barat,Sulawesi Utara,43
+Sumatera Barat,Sulawesi Tengah,7830
+Sumatera Barat,Sulawesi Selatan,14652
+Sumatera Barat,Sulawesi Tenggara,6634
+Sumatera Barat,Gorontalo,2078
+Sumatera Barat,Sulawesi Barat,2606
+Sumatera Barat,Maluku,14217
+Riau,Sulawesi Utara,6043
+Riau,Sulawesi Tengah,1577
+Riau,Sulawesi Selatan,19711
+Riau,Sulawesi Tenggara,8765
+Riau,Gorontalo,2557
+Riau,Sulawesi Barat,3140
+Riau,Maluku,852
+Jambi,Sulawesi Utara,2770
+Jambi,Sulawesi Tengah,4896
+Jambi,Sulawesi Selatan,71053
+Jambi,Sulawesi Tenggara,4380
+Jambi,Gorontalo,1274
+Jambi,Sulawesi Barat,1624
+Jambi,Maluku,712
+Sumatera Selatan,Sulawesi Utara,7584
+Sumatera Selatan,Sulawesi Tengah,13237
+Sumatera Selatan,Sulawesi Selatan,27401
+Sumatera Selatan,Sulawesi Tenggara,1533
+Sumatera Selatan,Gorontalo,3379
+Sumatera Selatan,Sulawesi Barat,4256
+Sumatera Selatan,Maluku,1687
+Bengkulu,Sulawesi Utara,1583
+Bengkulu,Sulawesi Tengah,2787
+Bengkulu,Sulawesi Selatan,5501
+Bengkulu,Sulawesi Tenggara,2677
+Bengkulu,Gorontalo,853
+Bengkulu,Sulawesi Barat,1058
+Bengkulu,Maluku,379
+Lampung,Sulawesi Utara,5254
+Lampung,Sulawesi Tengah,9918
+Lampung,Sulawesi Selatan,18481
+Lampung,Sulawesi Tenggara,7550
+Lampung,Gorontalo,2590
+Lampung,Sulawesi Barat,2776
+Lampung,Maluku,1405
+Kepulauan Bangka Belitung,Sulawesi Utara,1392
+Kepulauan Bangka Belitung,Sulawesi Tengah,2555
+Kepulauan Bangka Belitung,Sulawesi Selatan,5965
+Kepulauan Bangka Belitung,Sulawesi Tenggara,3059
+Kepulauan Bangka Belitung,Gorontalo,560
+Kepulauan Bangka Belitung,Sulawesi Barat,823
+Kepulauan Bangka Belitung,Maluku,520
+Kepulauan Riau,Sulawesi Utara,4180
+Kepulauan Riau,Sulawesi Tengah,5013
+Kepulauan Riau,Sulawesi Selatan,16044
+Kepulauan Riau,Sulawesi Tenggara,5640
+Kepulauan Riau,Gorontalo,893
+Kepulauan Riau,Sulawesi Barat,1168
+Kepulauan Riau,Maluku,131
+DKI Jakarta,Sulawesi Utara,93986
+DKI Jakarta,Sulawesi Tengah,69867
+DKI Jakarta,Sulawesi Selatan,251820
+DKI Jakarta,Sulawesi Tenggara,64710
+DKI Jakarta,Gorontalo,6441
+DKI Jakarta,Sulawesi Barat,416
+DKI Jakarta,Maluku,46828
+Jawa Barat,Sulawesi Utara,82206
+Jawa Barat,Sulawesi Tengah,92960
+Jawa Barat,Sulawesi Selatan,249891
+Jawa Barat,Sulawesi Tenggara,79336
+Jawa Barat,Gorontalo,23827
+Jawa Barat,Sulawesi Barat,21836
+Jawa Barat,Maluku,40916
+Jawa Tengah,Sulawesi Utara,29360
+Jawa Tengah,Sulawesi Tengah,45265
+Jawa Tengah,Sulawesi Selatan,92180
+Jawa Tengah,Sulawesi Tenggara,34329
+Jawa Tengah,Gorontalo,9216
+Jawa Tengah,Sulawesi Barat,10296
+Jawa Tengah,Maluku,18288
+DI Yogyakarta,Sulawesi Utara,8044
+DI Yogyakarta,Sulawesi Tengah,13033
+DI Yogyakarta,Sulawesi Selatan,32324
+DI Yogyakarta,Sulawesi Tenggara,11655
+DI Yogyakarta,Gorontalo,2614
+DI Yogyakarta,Sulawesi Barat,3246
+DI Yogyakarta,Maluku,5466
+Jawa Timur,Sulawesi Utara,55397
+Jawa Timur,Sulawesi Tengah,71038
+Jawa Timur,Sulawesi Selatan,184826
+Jawa Timur,Sulawesi Tenggara,6087
+Jawa Timur,Gorontalo,15140
+Jawa Timur,Sulawesi Barat,13669
+Jawa Timur,Maluku,34294
+Banten,Sulawesi Utara,47399
+Banten,Sulawesi Tengah,38473
+Banten,Sulawesi Selatan,140933
+Banten,Sulawesi Tenggara,30789
+Banten,Gorontalo,8590
+Banten,Sulawesi Barat,6447
+Banten,Maluku,7521
+Bali,Sulawesi Utara,69465
+Bali,Sulawesi Tengah,69817
+Bali,Sulawesi Selatan,41812
+Bali,Sulawesi Tenggara,9119
+Bali,Gorontalo,25805
+Bali,Sulawesi Barat,3630
+Bali,Maluku,5309
+Nusa Tenggara Barat,Sulawesi Utara,5885
+Nusa Tenggara Barat,Sulawesi Tengah,68853
+Nusa Tenggara Barat,Sulawesi Selatan,66983
+Nusa Tenggara Barat,Sulawesi Tenggara,10192
+Nusa Tenggara Barat,Gorontalo,2624
+Nusa Tenggara Barat,Sulawesi Barat,60996
+Nusa Tenggara Barat,Maluku,4057
+Nusa Tenggara Timur,Sulawesi Utara,7301
+Nusa Tenggara Timur,Sulawesi Tengah,10555
+Nusa Tenggara Timur,Sulawesi Selatan,94645
+Nusa Tenggara Timur,Sulawesi Tenggara,16342
+Nusa Tenggara Timur,Gorontalo,2574
+Nusa Tenggara Timur,Sulawesi Barat,4602
+Nusa Tenggara Timur,Maluku,10087
+Kalimantan Barat,Sulawesi Utara,4294
+Kalimantan Barat,Sulawesi Tengah,8109
+Kalimantan Barat,Sulawesi Selatan,19563
+Kalimantan Barat,Sulawesi Tenggara,5982
+Kalimantan Barat,Gorontalo,1886
+Kalimantan Barat,Sulawesi Barat,2430
+Kalimantan Barat,Maluku,1084
+Kalimantan Tengah,Sulawesi Utara,4584
+Kalimantan Tengah,Sulawesi Tengah,5317
+Kalimantan Tengah,Sulawesi Selatan,22847
+Kalimantan Tengah,Sulawesi Tenggara,4910
+Kalimantan Tengah,Gorontalo,1337
+Kalimantan Tengah,Sulawesi Barat,2445
+Kalimantan Tengah,Maluku,610
+Kalimantan Selatan,Sulawesi Utara,5363
+Kalimantan Selatan,Sulawesi Tengah,10842
+Kalimantan Selatan,Sulawesi Selatan,63238
+Kalimantan Selatan,Sulawesi Tenggara,9353
+Kalimantan Selatan,Gorontalo,1614
+Kalimantan Selatan,Sulawesi Barat,13046
+Kalimantan Selatan,Maluku,2175
+Kalimantan Timur,Sulawesi Utara,21572
+Kalimantan Timur,Sulawesi Tengah,57363
+Kalimantan Timur,Sulawesi Selatan,346577
+Kalimantan Timur,Sulawesi Tenggara,28616
+Kalimantan Timur,Gorontalo,3974
+Kalimantan Timur,Sulawesi Barat,48230
+Kalimantan Timur,Maluku,2996
+Kalimantan Utara,Sulawesi Utara,27
+Kalimantan Utara,Sulawesi Tengah,14747
+Kalimantan Utara,Sulawesi Selatan,70635
+Kalimantan Utara,Sulawesi Tenggara,48
+Kalimantan Utara,Gorontalo,1111
+Kalimantan Utara,Sulawesi Barat,4644
+Kalimantan Utara,Maluku,378
+Sulawesi Utara,Sulawesi Utara,13045580
+Sulawesi Utara,Sulawesi Tengah,12085
+Sulawesi Utara,Sulawesi Selatan,84978
+Sulawesi Utara,Sulawesi Tenggara,13022
+Sulawesi Utara,Gorontalo,535366
+Sulawesi Utara,Sulawesi Barat,4093
+Sulawesi Utara,Maluku,11758
+Sulawesi Tengah,Sulawesi Utara,106491
+Sulawesi Tengah,Sulawesi Tengah,8749335
+Sulawesi Tengah,Sulawesi Selatan,988166
+Sulawesi Tengah,Sulawesi Tenggara,445586
+Sulawesi Tengah,Gorontalo,264331
+Sulawesi Tengah,Sulawesi Barat,365216
+Sulawesi Tengah,Maluku,2407
+Sulawesi Selatan,Sulawesi Utara,74247
+Sulawesi Selatan,Sulawesi Tengah,848956
+Sulawesi Selatan,Sulawesi Selatan,37282661
+Sulawesi Selatan,Sulawesi Tenggara,768027
+Sulawesi Selatan,Gorontalo,33440
+Sulawesi Selatan,Sulawesi Barat,1248711
+Sulawesi Selatan,Maluku,50105
+Sulawesi Tenggara,Sulawesi Utara,10210
+Sulawesi Tenggara,Sulawesi Tengah,349494
+Sulawesi Tenggara,Sulawesi Selatan,743188
+Sulawesi Tenggara,Sulawesi Tenggara,11447103
+Sulawesi Tenggara,Gorontalo,4343
+Sulawesi Tenggara,Sulawesi Barat,22677
+Sulawesi Tenggara,Maluku,23374
+Gorontalo,Sulawesi Utara,615749
+Gorontalo,Sulawesi Tengah,327181
+Gorontalo,Sulawesi Selatan,49365
+Gorontalo,Sulawesi Tenggara,7415
+Gorontalo,Gorontalo,4286894
+Gorontalo,Sulawesi Barat,3998
+Gorontalo,Maluku,1206
+Sulawesi Barat,Sulawesi Utara,4019
+Sulawesi Barat,Sulawesi Tengah,475598
+Sulawesi Barat,Sulawesi Selatan,1256573
+Sulawesi Barat,Sulawesi Tenggara,32596
+Sulawesi Barat,Gorontalo,3921
+Sulawesi Barat,Sulawesi Barat,2744008
+Sulawesi Barat,Maluku,745
+Maluku,Sulawesi Utara,8349
+Maluku,Sulawesi Tengah,4679
+Maluku,Sulawesi Selatan,38771
+Maluku,Sulawesi Tenggara,30730
+Maluku,Gorontalo,1434
+Maluku,Sulawesi Barat,14133
+Maluku,Maluku,137664
+Maluku Utara,Sulawesi Utara,143651
+Maluku Utara,Sulawesi Tengah,34383
+Maluku Utara,Sulawesi Selatan,62479
+Maluku Utara,Sulawesi Tenggara,55695
+Maluku Utara,Gorontalo,9464
+Maluku Utara,Sulawesi Barat,3346
+Maluku Utara,Maluku,82682
+Papua Barat,Sulawesi Utara,5548
+Papua Barat,Sulawesi Tengah,1454
+Papua Barat,Sulawesi Selatan,24613
+Papua Barat,Sulawesi Tenggara,7545
+Papua Barat,Gorontalo,380
+Papua Barat,Sulawesi Barat,524
+Papua Barat,Maluku,199935
+Papua Barat Daya,Sulawesi Utara,13126
+Papua Barat Daya,Sulawesi Tengah,1506
+Papua Barat Daya,Sulawesi Selatan,27813
+Papua Barat Daya,Sulawesi Tenggara,7701
+Papua Barat Daya,Gorontalo,511
+Papua Barat Daya,Sulawesi Barat,597
+Papua Barat Daya,Maluku,26926
+Papua,Sulawesi Utara,8723
+Papua,Sulawesi Tengah,2012
+Papua,Sulawesi Selatan,37983
+Papua,Sulawesi Tenggara,7404
+Papua,Gorontalo,743
+Papua,Sulawesi Barat,922
+Papua,Maluku,8756
+Papua Selatan,Sulawesi Utara,1392
+Papua Selatan,Sulawesi Tengah,709
+Papua Selatan,Sulawesi Selatan,14454
+Papua Selatan,Sulawesi Tenggara,1809
+Papua Selatan,Gorontalo,140
+Papua Selatan,Sulawesi Barat,398
+Papua Selatan,Maluku,4600
+Papua Tengah,Sulawesi Utara,12086
+Papua Tengah,Sulawesi Tengah,2492
+Papua Tengah,Sulawesi Selatan,56505
+Papua Tengah,Sulawesi Tenggara,8447
+Papua Tengah,Gorontalo,1010
+Papua Tengah,Sulawesi Barat,1578
+Papua Tengah,Maluku,19350
+Papua Pegunungan,Sulawesi Utara,2267
+Papua Pegunungan,Sulawesi Tengah,1393
+Papua Pegunungan,Sulawesi Selatan,15903
+Papua Pegunungan,Sulawesi Tenggara,2126
+Papua Pegunungan,Gorontalo,403
+Papua Pegunungan,Sulawesi Barat,77
+Papua Pegunungan,Maluku,922
+Aceh,Maluku Utara,2950
+Aceh,Papua Barat,1208
+Aceh,Papua Barat Daya,1
+Aceh,Papua,1168
+Aceh,Papua Selatan,86
+Aceh,Papua Tengah,498
+Aceh,Papua Pegunungan,367
+Sumatera Utara,Maluku Utara,8130
+Sumatera Utara,Papua Barat,3750
+Sumatera Utara,Papua Barat Daya,3436
+Sumatera Utara,Papua,3972
+Sumatera Utara,Papua Selatan,892
+Sumatera Utara,Papua Tengah,1873
+Sumatera Utara,Papua Pegunungan,1099
+Sumatera Barat,Maluku Utara,20452
+Sumatera Barat,Papua Barat,1264
+Sumatera Barat,Papua Barat Daya,1051
+Sumatera Barat,Papua,1514
+Sumatera Barat,Papua Selatan,159
+Sumatera Barat,Papua Tengah,527
+Sumatera Barat,Papua Pegunungan,510
+Riau,Maluku Utara,5057
+Riau,Papua Barat,2023
+Riau,Papua Barat Daya,1637
+Riau,Papua,1611
+Riau,Papua Selatan,269
+Riau,Papua Tengah,1847
+Riau,Papua Pegunungan,408
+Jambi,Maluku Utara,2423
+Jambi,Papua Barat,1130
+Jambi,Papua Barat Daya,2109
+Jambi,Papua,793
+Jambi,Papua Selatan,141
+Jambi,Papua Tengah,410
+Jambi,Papua Pegunungan,257
+Sumatera Selatan,Maluku Utara,6026
+Sumatera Selatan,Papua Barat,2509
+Sumatera Selatan,Papua Barat Daya,2054
+Sumatera Selatan,Papua,2147
+Sumatera Selatan,Papua Selatan,365
+Sumatera Selatan,Papua Tengah,1013
+Sumatera Selatan,Papua Pegunungan,581
+Bengkulu,Maluku Utara,1572
+Bengkulu,Papua Barat,670
+Bengkulu,Papua Barat Daya,459
+Bengkulu,Papua,473
+Bengkulu,Papua Selatan,7
+Bengkulu,Papua Tengah,226
+Bengkulu,Papua Pegunungan,139
+Lampung,Maluku Utara,4380
+Lampung,Papua Barat,1642
+Lampung,Papua Barat Daya,1503
+Lampung,Papua,1731
+Lampung,Papua Selatan,307
+Lampung,Papua Tengah,893
+Lampung,Papua Pegunungan,367
+Kepulauan Bangka Belitung,Maluku Utara,1057
+Kepulauan Bangka Belitung,Papua Barat,410
+Kepulauan Bangka Belitung,Papua Barat Daya,325
+Kepulauan Bangka Belitung,Papua,280
+Kepulauan Bangka Belitung,Papua Selatan,59
+Kepulauan Bangka Belitung,Papua Tengah,195
+Kepulauan Bangka Belitung,Papua Pegunungan,86
+Kepulauan Riau,Maluku Utara,1812
+Kepulauan Riau,Papua Barat,7
+Kepulauan Riau,Papua Barat Daya,860
+Kepulauan Riau,Papua,1797
+Kepulauan Riau,Papua Selatan,178
+Kepulauan Riau,Papua Tengah,1370
+Kepulauan Riau,Papua Pegunungan,152
+DKI Jakarta,Maluku Utara,32808
+DKI Jakarta,Papua Barat,18511
+DKI Jakarta,Papua Barat Daya,24609
+DKI Jakarta,Papua,39374
+DKI Jakarta,Papua Selatan,71201
+DKI Jakarta,Papua Tengah,10301
+DKI Jakarta,Papua Pegunungan,2687
+Jawa Barat,Maluku Utara,45747
+Jawa Barat,Papua Barat,22947
+Jawa Barat,Papua Barat Daya,24707
+Jawa Barat,Papua,35183
+Jawa Barat,Papua Selatan,9978
+Jawa Barat,Papua Tengah,13676
+Jawa Barat,Papua Pegunungan,4144
+Jawa Tengah,Maluku Utara,21545
+Jawa Tengah,Papua Barat,975
+Jawa Tengah,Papua Barat Daya,10017
+Jawa Tengah,Papua,12273
+Jawa Tengah,Papua Selatan,4310
+Jawa Tengah,Papua Tengah,6197
+Jawa Tengah,Papua Pegunungan,1594
+DI Yogyakarta,Maluku Utara,5894
+DI Yogyakarta,Papua Barat,2803
+DI Yogyakarta,Papua Barat Daya,3532
+DI Yogyakarta,Papua,5453
+DI Yogyakarta,Papua Selatan,1938
+DI Yogyakarta,Papua Tengah,2151
+DI Yogyakarta,Papua Pegunungan,643
+Jawa Timur,Maluku Utara,28744
+Jawa Timur,Papua Barat,14709
+Jawa Timur,Papua Barat Daya,19619
+Jawa Timur,Papua,21943
+Jawa Timur,Papua Selatan,7282
+Jawa Timur,Papua Tengah,1085
+Jawa Timur,Papua Pegunungan,2253
+Banten,Maluku Utara,18598
+Banten,Papua Barat,10245
+Banten,Papua Barat Daya,15372
+Banten,Papua,26213
+Banten,Papua Selatan,3257
+Banten,Papua Tengah,8434
+Banten,Papua Pegunungan,1366
+Bali,Maluku Utara,2744
+Bali,Papua Barat,1517
+Bali,Papua Barat Daya,5998
+Bali,Papua,3199
+Bali,Papua Selatan,581
+Bali,Papua Tengah,1284
+Bali,Papua Pegunungan,289
+Nusa Tenggara Barat,Maluku Utara,3833
+Nusa Tenggara Barat,Papua Barat,1875
+Nusa Tenggara Barat,Papua Barat Daya,5454
+Nusa Tenggara Barat,Papua,2455
+Nusa Tenggara Barat,Papua Selatan,595
+Nusa Tenggara Barat,Papua Tengah,1161
+Nusa Tenggara Barat,Papua Pegunungan,408
+Nusa Tenggara Timur,Maluku Utara,4753
+Nusa Tenggara Timur,Papua Barat,5868
+Nusa Tenggara Timur,Papua Barat Daya,3722
+Nusa Tenggara Timur,Papua,3352
+Nusa Tenggara Timur,Papua Selatan,1109
+Nusa Tenggara Timur,Papua Tengah,1436
+Nusa Tenggara Timur,Papua Pegunungan,634
+Kalimantan Barat,Maluku Utara,3570
+Kalimantan Barat,Papua Barat,1087
+Kalimantan Barat,Papua Barat Daya,931
+Kalimantan Barat,Papua,1885
+Kalimantan Barat,Papua Selatan,277
+Kalimantan Barat,Papua Tengah,552
+Kalimantan Barat,Papua Pegunungan,306
+Kalimantan Tengah,Maluku Utara,2014
+Kalimantan Tengah,Papua Barat,783
+Kalimantan Tengah,Papua Barat Daya,761
+Kalimantan Tengah,Papua,1048
+Kalimantan Tengah,Papua Selatan,126
+Kalimantan Tengah,Papua Tengah,568
+Kalimantan Tengah,Papua Pegunungan,27
+Kalimantan Selatan,Maluku Utara,2732
+Kalimantan Selatan,Papua Barat,786
+Kalimantan Selatan,Papua Barat Daya,1028
+Kalimantan Selatan,Papua,1126
+Kalimantan Selatan,Papua Selatan,604
+Kalimantan Selatan,Papua Tengah,431
+Kalimantan Selatan,Papua Pegunungan,169
+Kalimantan Timur,Maluku Utara,6272
+Kalimantan Timur,Papua Barat,1915
+Kalimantan Timur,Papua Barat Daya,2252
+Kalimantan Timur,Papua,1954
+Kalimantan Timur,Papua Selatan,735
+Kalimantan Timur,Papua Tengah,1036
+Kalimantan Timur,Papua Pegunungan,243
+Kalimantan Utara,Maluku Utara,975
+Kalimantan Utara,Papua Barat,332
+Kalimantan Utara,Papua Barat Daya,334
+Kalimantan Utara,Papua,297
+Kalimantan Utara,Papua Selatan,40
+Kalimantan Utara,Papua Tengah,72
+Kalimantan Utara,Papua Pegunungan,34
+Sulawesi Utara,Maluku Utara,113926
+Sulawesi Utara,Papua Barat,5722
+Sulawesi Utara,Papua Barat Daya,10656
+Sulawesi Utara,Papua,9262
+Sulawesi Utara,Papua Selatan,1223
+Sulawesi Utara,Papua Tengah,3987
+Sulawesi Utara,Papua Pegunungan,884
+Sulawesi Tengah,Maluku Utara,19148
+Sulawesi Tengah,Papua Barat,1568
+Sulawesi Tengah,Papua Barat Daya,1837
+Sulawesi Tengah,Papua,13
+Sulawesi Tengah,Papua Selatan,309
+Sulawesi Tengah,Papua Tengah,757
+Sulawesi Tengah,Papua Pegunungan,31
+Sulawesi Selatan,Maluku Utara,41985
+Sulawesi Selatan,Papua Barat,25335
+Sulawesi Selatan,Papua Barat Daya,25053
+Sulawesi Selatan,Papua,39231
+Sulawesi Selatan,Papua Selatan,16105
+Sulawesi Selatan,Papua Tengah,24539
+Sulawesi Selatan,Papua Pegunungan,4330
+Sulawesi Tenggara,Maluku Utara,29803
+Sulawesi Tenggara,Papua Barat,4055
+Sulawesi Tenggara,Papua Barat Daya,4386
+Sulawesi Tenggara,Papua,4232
+Sulawesi Tenggara,Papua Selatan,1560
+Sulawesi Tenggara,Papua Tengah,500
+Sulawesi Tenggara,Papua Pegunungan,23374
+Gorontalo,Maluku Utara,7605
+Gorontalo,Papua Barat,568
+Gorontalo,Papua Barat Daya,597
+Gorontalo,Papua,722
+Gorontalo,Papua Selatan,112
+Gorontalo,Papua Tengah,329
+Gorontalo,Papua Pegunungan,215
+Sulawesi Barat,Maluku Utara,1502
+Sulawesi Barat,Papua Barat,481
+Sulawesi Barat,Papua Barat Daya,558
+Sulawesi Barat,Papua,703
+Sulawesi Barat,Papua Selatan,652
+Sulawesi Barat,Papua Tengah,390
+Sulawesi Barat,Papua Pegunungan,136
+Maluku,Maluku Utara,36712
+Maluku,Papua Barat,18686
+Maluku,Papua Barat Daya,16892
+Maluku,Papua,6561
+Maluku,Papua Selatan,7037
+Maluku,Papua Tengah,8857
+Maluku,Papua Pegunungan,225
+Maluku Utara,Maluku Utara,3028209
+Maluku Utara,Papua Barat,2385
+Maluku Utara,Papua Barat Daya,10548
+Maluku Utara,Papua,2086
+Maluku Utara,Papua Selatan,238
+Maluku Utara,Papua Tengah,725
+Maluku Utara,Papua Pegunungan,154
+Papua Barat,Maluku Utara,2736
+Papua Barat,Papua Barat,555673
+Papua Barat,Papua Barat Daya,84950
+Papua Barat,Papua,54623
+Papua Barat,Papua Selatan,1348
+Papua Barat,Papua Tengah,15601
+Papua Barat,Papua Pegunungan,556
+Papua Barat Daya,Maluku Utara,10468
+Papua Barat Daya,Papua Barat,90812
+Papua Barat Daya,Papua Barat Daya,1367140
+Papua Barat Daya,Papua,25481
+Papua Barat Daya,Papua Selatan,1534
+Papua Barat Daya,Papua Tengah,4190
+Papua Barat Daya,Papua Pegunungan,458
+Papua,Maluku Utara,2479
+Papua,Papua Barat,55044
+Papua,Papua Barat Daya,20591
+Papua,Papua,2186427
+Papua,Papua Selatan,22612
+Papua,Papua Tengah,55977
+Papua,Papua Pegunungan,75130
+Papua Selatan,Maluku Utara,423
+Papua Selatan,Papua Barat,1213
+Papua Selatan,Papua Barat Daya,2819
+Papua Selatan,Papua,35377
+Papua Selatan,Papua Selatan,219608
+Papua Selatan,Papua Tengah,6794
+Papua Selatan,Papua Pegunungan,7992
+Papua Tengah,Maluku Utara,2000
+Papua Tengah,Papua Barat,26698
+Papua Tengah,Papua Barat Daya,9477
+Papua Tengah,Papua,133881
+Papua Tengah,Papua Selatan,12160
+Papua Tengah,Papua Tengah,690853
+Papua Tengah,Papua Pegunungan,22256
+Papua Pegunungan,Maluku Utara,697
+Papua Pegunungan,Papua Barat,1552
+Papua Pegunungan,Papua Barat Daya,1366
+Papua Pegunungan,Papua,183587
+Papua Pegunungan,Papua Selatan,51559
+Papua Pegunungan,Papua Tengah,23189
+Papua Pegunungan,Papua Pegunungan,705843

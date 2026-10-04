@@ -10,6 +10,8 @@ from .flow import prep_manca
 
 ASSETS = Path(__file__).resolve().parent.parent.parent / "assets"
 VIDEO_EXT = (".mp4", ".webm", ".mov", ".m4v")
+VIDEO_KREDIT = "Video latar: YouTube"
+VIDEO_URL = ""
 GAMBAR = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico")
 
 CSS = """<style>
@@ -23,6 +25,9 @@ CSS = """<style>
   background:linear-gradient(180deg,rgba(8,20,45,.45) 0%,rgba(8,20,45,.25) 40%,rgba(8,20,45,.78) 100%)}
 .brand{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-radius:999px;padding:6px 8px 6px 14px;
   width:fit-content;max-width:100%;box-shadow:0 10px 26px -14px rgba(0,0,0,.45)}
+.vid-credit{position:fixed;right:14px;bottom:6px;z-index:3;font-size:11px;color:rgba(255,255,255,.8);
+  text-shadow:0 1px 6px rgba(0,0,0,.7)}
+.vid-credit a{color:inherit}
 .brand .tag{display:none}
 .brand{padding-right:18px!important}
 </style>"""
@@ -113,6 +118,8 @@ def render(load, load_sheet):
         with st.container(key="bgvideo"):
             st.video(str(video), loop=True, autoplay=True, muted=True)
         st.markdown('<div class="bg-shade"></div>', unsafe_allow_html=True)
+        kredit = f'<a href="{esc(VIDEO_URL)}" target="_blank">{esc(VIDEO_KREDIT)}</a>' if VIDEO_URL else esc(VIDEO_KREDIT)
+        st.markdown(f'<div class="vid-credit">{kredit}</div>', unsafe_allow_html=True)
     html = (HERO.replace("__STATS__", cells).replace("__FALLBACK__", "" if video else FALLBACK)
-            .replace("__CREDIT__", " · Video: YouTube" if video else ""))
+            .replace("__CREDIT__", ""))
     components.html(html, height=640)

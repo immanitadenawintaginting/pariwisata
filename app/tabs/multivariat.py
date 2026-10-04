@@ -85,6 +85,7 @@ def _transform(df, vars_, log):
     if log:
         for v in vars_:
             if _meta(v)[0]["log"]:
+                # jumlah akomodasi/kamar sangat miring ke kanan, di-log biar Jakarta dkk tidak mendominasi
                 X[v] = np.log10(X[v])
     return X
 
@@ -96,15 +97,18 @@ def _analisis(X: pd.DataFrame, k: int):
     skor = pca.transform(Z)
     komp = pca.components_.copy()
     for c in range(2):
+        # tanda PC bisa terbalik tiap dijalankan, dibuat tetap
         if komp[c].sum() < 0:
             komp[c] *= -1
             skor[:, c] *= -1
     km = KMeans(n_clusters=k, n_init=10, random_state=42).fit(Z)
+    # K1 = klaster dengan rata-rata z paling rendah
     urut = np.argsort([Z[km.labels_ == c].mean() for c in range(k)])
     peta = {old: new for new, old in enumerate(urut)}
     klaster = np.array([peta[c] for c in km.labels_])
     sil = float(silhouette_score(Z, klaster))
     m = max(2, int(np.searchsorted(np.cumsum(pca.explained_variance_ratio_), 0.80) + 1))
+    # jarak mahalanobis pada PC yang menjelaskan >=80% ragam, dipakai untuk pencilan
     d2 = (skor[:, :m] ** 2 / pca.explained_variance_[:m]).sum(axis=1)
     return dict(Z=Z, ev=pca.explained_variance_ratio_, evar=pca.explained_variance_, komp=komp,
                 skor=skor, klaster=klaster, sil=sil, d2=d2, batas=float(chi2.ppf(0.975, df=m)),
@@ -295,7 +299,7 @@ def render(load_sheet):
                         help="Jumlah akomodasi, kamar, dan tempat tidur sangat menjulur ke kanan "
                              "(DKI Jakarta, Jawa Barat, Bali jauh di atas lainnya). Log10 mencegah satu-dua "
                              "provinsi mendominasi PCA dan klaster. Label sumbu tetap dalam satuan asli.")
-        with st.expander("Variabel yang dianalisis (minimal 8)"):
+        with st.expander("Variabel yang dianalisis"):
             vars_ = st.multiselect("Variabel analisis", VARIABEL + list(EXTRA), default=VARIABEL, key="mv_vars",
                                    format_func=label,
                                    help="Dua variabel terakhir (wisatawan tujuan, % perempuan) opsional: bukan "
@@ -400,5 +404,5 @@ def render(load_sheet):
 
     st.write("")
     with st.expander("Sumber data"):
-        for k_ in ("tpk", "multi", "wisnus_tujuan"):
+        for k_ in ("multi",):
             st.markdown("- " + kutip(k_, True))

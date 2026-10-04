@@ -41,7 +41,8 @@
     border-radius:6px;padding:1px 8px;font-size:.84rem}
   .sel .chips i{width:9px;height:9px;border-radius:50%;display:inline-block}
   .empty{color:var(--muted);font-size:.9rem}
-  @media (max-width:820px){ .grid{grid-template-columns:minmax(0,1fr)} .spacer{display:none} }
+  @media (max-width:820px){ .grid{grid-template-columns:minmax(0,1fr)} .spacer{display:none}
+    .card{overflow-x:auto} #par{min-width:780px} #splom{min-width:560px} }
 </style>
 </head>
 <body>
@@ -320,6 +321,7 @@ function drawChips() {
 let pendT = null;
 let pendSet = null;
 function pend(set, src) {
+  // plotly kirim event kosong setelah seleksi valid, abaikan
   if (!set && pendSet) return;
   clearTimeout(pendT); pendSet = set;
   pendT = setTimeout(() => { pendSet = null; setSel(set, src); }, 90);

@@ -114,6 +114,7 @@ function fitView() {
   if (b.width < 2 * R + 40 || b.height < 2 * R) return;
   svg.attr("viewBox", `${b.x - p} ${b.y - p} ${b.width + 2 * p} ${b.height + 2 * p}`);
 }
+// kalau iframe sempat tersembunyi (tab lain), hitung ulang saat sudah terlihat
 fitView();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitView);
 new ResizeObserver(fitView).observe(document.getElementById("chart"));

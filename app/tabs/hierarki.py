@@ -3,23 +3,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+from prapemrosesan import susun_hierarki
 from sumber import kutip
 from theme import card, chapter, hero, inject_theme, insight, kpi_card, panel, polish, story_nav
 
-PULAU = {
-    "Sumatera": ["Aceh", "Sumatera Utara", "Sumatera Barat", "Riau", "Jambi", "Sumatera Selatan",
-                 "Bengkulu", "Lampung", "Kepulauan Bangka Belitung", "Kepulauan Riau"],
-    "Jawa": ["DKI Jakarta", "Jawa Barat", "Jawa Tengah", "DI Yogyakarta", "Jawa Timur", "Banten"],
-    "Bali & Nusa Tenggara": ["Bali", "Nusa Tenggara Barat", "Nusa Tenggara Timur"],
-    "Kalimantan": ["Kalimantan Barat", "Kalimantan Tengah", "Kalimantan Selatan",
-                   "Kalimantan Timur", "Kalimantan Utara"],
-    "Sulawesi": ["Sulawesi Utara", "Sulawesi Tengah", "Sulawesi Selatan", "Sulawesi Tenggara",
-                 "Gorontalo", "Sulawesi Barat"],
-    "Maluku": ["Maluku", "Maluku Utara"],
-    "Papua": ["Papua Barat", "Papua Barat Daya", "Papua", "Papua Selatan", "Papua Tengah",
-              "Papua Pegunungan"],
-}
-PULAU_DARI = {p: pulau for pulau, ps in PULAU.items() for p in ps}
 ROOT = "Indonesia"
 
 UKURAN = {
@@ -35,28 +22,7 @@ WARNA = {
 
 @st.cache_data
 def siapkan(_load_sheet):
-    geo = _load_sheet("GeoNMulti").copy()
-    geo["Provinsi"] = geo["Provinsi"].astype(str).str.strip()
-    geo["Pulau"] = geo["Provinsi"].map(PULAU_DARI).fillna("Lainnya")
-
-    akom = []
-    for _, r in geo.iterrows():
-        for jenis, s in (("Bintang", "Bintang"), ("Non-Bintang", "NonBintang")):
-            akom.append(dict(
-                Pulau=r["Pulau"], Provinsi=r["Provinsi"], Jenis=jenis,
-                Akomodasi=int(r[f"Akomodasi_{s}"]), Kamar=int(r[f"Kamar_{s}"]),
-                TempatTidur=int(r[f"TempatTidur_{s}"]), TPK=float(r[f"TPK_{s}"]),
-                Lama=float(r[f"LamaMenginap_{s}"])))
-    akom = pd.DataFrame(akom)
-
-    gender = []
-    for _, r in geo.iterrows():
-        tot = float(r["JumlahWisatawanTujuan"])
-        for jk in ("Laki-laki", "Perempuan"):
-            gender.append(dict(
-                Pulau=r["Pulau"], Provinsi=r["Provinsi"], JK=jk,
-                Ukuran=round(tot * float(r[jk]) / 100), Warna=float(r["Perempuan"])))
-    return akom, pd.DataFrame(gender)
+    return susun_hierarki(_load_sheet("GeoNMulti"))
 
 
 def bangun_node(d, levels, fmt_teks, hover_leaf, hover_parent):
@@ -84,6 +50,7 @@ def bangun_node(d, levels, fmt_teks, hover_leaf, hover_parent):
 
 
 def gambar(jenis, n, skala, warna_label, cmin, cmax, judul, ukuran_label, maxdepth, height):
+    # induk = jumlah anak (branchvalues total), warna induk dirata-rata berbobot
     marker = dict(
         colors=n["Warna"], colorscale=skala, cmin=cmin, cmax=cmax, line=dict(width=1, color="white"),
         colorbar=dict(title=dict(text=warna_label, side="top"), orientation="h", x=0.5, xanchor="center",
@@ -180,18 +147,16 @@ def _bagian_akomodasi(akom, d_sel, depth):
 def _bagian_gender(gender, d_sel, depth):
     chapter(2, "hr-2", "Icicle", "Bagaimana komposisi wisatawan menurut jenis kelamin?",
             "Perjalanan wisatawan nusantara dipecah menurut jenis kelamin pada setiap provinsi tujuan. "
-            "Warna menunjukkan persentase wisatawan menurut jenis kelamin yang dipilih.", "#CC79A7")
+            "Warna dapat diganti antara persentase perempuan dan persentase laki-laki di setiap provinsi.", "#CC79A7")
     with panel("hr_jk"):
-        jk = st.segmented_control("Jenis kelamin", ["Semua", "Laki-laki", "Perempuan"], default="Semua",
-                                  key="hr_jk_pilih") or "Semua"
-    lk = jk == "Laki-laki"
+        pilih = st.segmented_control("Warna = ", ["Persentase perempuan", "Persentase laki-laki"],
+                                     default="Persentase perempuan", key="hr_jk_pilih") or "Persentase perempuan"
+    lk = pilih == "Persentase laki-laki"
     kata = "laki-laki" if lk else "perempuan"
     w_label = f"Persentase {kata} (%)"
 
     def pakai(df):
         df = df.copy()
-        if jk != "Semua":
-            df = df[df["JK"] == jk]
         if lk:
             df["Warna"] = 100 - df["Warna"]
         return df
@@ -204,10 +169,9 @@ def _bagian_gender(gender, d_sel, depth):
         hover_leaf=lambda u, w: f"Perjalanan: <b>{u:,.0f}</b><br>% {kata} di provinsi: {w:.1f}%",
         hover_parent=lambda u, w: f"Perjalanan: <b>{u:,.0f}</b><br>% {kata} (terbobot): {w:.1f}%")
     h = 560
-    ket = "" if jk == "Semua" else f" ({kata})"
     with card("icicle"):
         st.plotly_chart(gambar("Icicle", n, "Cividis", w_label, cmin, cmax,
-                               "perjalanan wisatawan nusantara menurut jenis kelamin" + ket,
+                               "perjalanan wisatawan nusantara menurut jenis kelamin",
                                "jumlah perjalanan", depth, h), width="stretch")
 
     p = gender.drop_duplicates("Provinsi").set_index("Provinsi")["Warna"]
@@ -259,5 +223,5 @@ def render(load_sheet):
 
     st.write("")
     with st.expander("Sumber data"):
-        for k in ("tpk", "multi", "wisnus_tujuan"):
+        for k in ("multi", "od"):
             st.markdown("- " + kutip(k, True))

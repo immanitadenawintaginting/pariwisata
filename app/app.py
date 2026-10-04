@@ -40,7 +40,8 @@ def load_sheet(sheet: str) -> pd.DataFrame:
 inject_theme()
 brand_bar("Pariwisata Indonesia", "Sumber: BPS", logo=data_uri(LOGO))
 
-tab_b, tab_f, tab_m, tab_h = st.tabs(["Beranda", "Aliran", "Multivariat", "Hierarki"])
+with st.container(key="nav"):
+    tab_b, tab_f, tab_m, tab_h = st.tabs(["Beranda", "Aliran", "Multivariat", "Hierarki"])
 
 with tab_b:
     beranda.render(load, load_sheet)

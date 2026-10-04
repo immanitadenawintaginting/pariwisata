@@ -8,7 +8,8 @@ import plotly.graph_objects as go
 import streamlit as st
 import streamlit.components.v1 as components
 
-from sumber import kutip
+from prapemrosesan import bersihkan_flow
+from sumber import CATATAN_WISMAN, kutip
 from theme import (card, chapter, chips, hero, inject_theme, insight, kpi_card, panel,
                    polish, story_nav)
 
@@ -16,12 +17,6 @@ from theme import (card, chapter, chips, hero, inject_theme, insight, kpi_card, 
 HTML_PATH = Path(__file__).parent / "chord.html"
 
 SEMUA = "(Semua provinsi)"
-ALIAS_PROV = {"NTT": "Nusa Tenggara Timur", "NTB": "Nusa Tenggara Barat", "DIY": "DI Yogyakarta",
-              "Kep. Riau": "Kepulauan Riau", "DK Jakarta": "DKI Jakarta"}
-TUJUAN_KHUSUS = {"Perbatasan Laut Sea Border": "Perbatasan laut",
-                 "Perbatasan Darat Land Border": "Perbatasan darat",
-                 "Lainnya Others": "Pintu lainnya"}
-KOREKSI_PINTU = {"Sam Ratalungi": "Sam Ratulangi", "Hassanudin": "Hasanuddin"}
 LEVEL_PINTU, LEVEL_PROV = "Pintu masuk", "Provinsi"
 
 BLUE, ORANGE, VERM, GREY = "#0072B2", "#E69F00", "#D55E00", "#A0A0A0"
@@ -86,25 +81,7 @@ def show(fig):
 
 @st.cache_data
 def prep_manca(raw: pd.DataFrame):
-    d = raw.iloc[:, :3].copy()
-    d.columns = ["Asal", "Tujuan", "Value"]
-    d["Asal"] = d["Asal"].astype(str).str.split("/").str[0].str.strip()
-    d["Tujuan"] = d["Tujuan"].astype(str).str.replace(r"\s+", " ", regex=True).str.strip()
-    d["Value"] = pd.to_numeric(d["Value"], errors="coerce").fillna(0)
-
-    khusus = d["Tujuan"].isin(TUJUAN_KHUSUS)
-    pecah = d["Tujuan"].str.rsplit(",", n=1, expand=True)
-    pintu = pecah[0].str.strip().replace(KOREKSI_PINTU, regex=True)
-    prov_raw = pecah[1].fillna("").str.strip()
-    d["Pintu"] = np.where(khusus, d["Tujuan"].map(TUJUAN_KHUSUS), pintu)
-    d["Provinsi"] = np.where(khusus, d["Tujuan"].map(TUJUAN_KHUSUS), prov_raw.replace(ALIAS_PROV))
-    d["Tujuan"] = np.where(khusus, d["Pintu"], pintu + ", " + prov_raw)
-
-    d = d.groupby(["Asal", "Tujuan", "Pintu", "Provinsi"], as_index=False)["Value"].sum()
-    n_kosong = int((d["Value"] == 0).sum())
-    d = d[d["Value"] >= 0].copy()
-    d["Kategori"] = np.where(d["Asal"].str.endswith("Lainnya"), "Kelompok", "Negara")
-    return d.reset_index(drop=True), n_kosong
+    return bersihkan_flow(raw)
 
 
 def sankey(df: pd.DataFrame, focus_t=()) -> go.Figure:
@@ -137,7 +114,7 @@ def sankey(df: pd.DataFrame, focus_t=()) -> go.Figure:
     fig.update_layout(height=min(560, max(420, 12 * len(srcs) + 120)), margin=dict(l=8, r=8, t=56, b=6),
                       font=dict(size=12), separators=",.",
                       title=judul("Aliran wisman: negara asal → tujuan kedatangan",
-                                  "Jumlah kunjungan wisatawan mancanegara"))
+                                  "Jumlah kunjungan wisatawan mancanegara, 2024"))
     return fig
 
 
@@ -177,7 +154,7 @@ def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
     fig.update_layout(
         height=min(1000, max(640, 30 * len(rows) + 230)), margin=dict(l=8, r=8, t=56, b=6), separators=",.",
         title=judul("Matriks OD: negara asal × tujuan kedatangan",
-                    "Jumlah kunjungan wisman, 0 = tidak ada · baris dan kolom terurut menurut total"),
+                    "Kunjungan wisman 2024 · terurut menurut total"),
         xaxis=dict(title=None, tickangle=-90, tickfont=dict(size=11), automargin=True, tickvals=list(cols),
                    ticktext=short, ticklabelstandoff=2),
         yaxis=dict(title=None, autorange="reversed", tickfont=dict(size=11), automargin=True))
@@ -309,20 +286,25 @@ def render(load, load_sheet):
          "Pola <em>aliran</em> wisatawan di Indonesia",
          f"Data BPS mencatat {compact(total_m)} kunjungan wisatawan mancanegara dari {by_cty.size} negara melalui "
          f"{len(by_pintu)} pintu kedatangan, serta {compact(nonself['Value'].sum())} perjalanan wisatawan nusantara "
-         f"antarprovinsi pada {len(prov_all)} provinsi. Visualisasi disusun dalam tiga bagian.",
+         f"antarprovinsi pada {len(prov_all)} provinsi.",
          [(total_m, "kunjungan wisman"), (by_cty.size, "negara asal"),
           (len(by_pintu), "pintu kedatangan"), (nonself["Value"].sum(), "perjalanan antarprovinsi")])
     story_nav([("bab-1", "1 · Asal wisatawan mancanegara"), ("bab-2", "2 · Pasangan asal-tujuan"),
                ("bab-3", "3 · Perjalanan antarprovinsi")])
 
+    def _atur_chord():
+        # begitu provinsi dipilih, chord menampilkan semua provinsi yang terhubung dengannya
+        st.session_state["fl_cn"] = 38 if st.session_state.get("fl_fokus", SEMUA) != SEMUA else 20
+
     box = panel("filter", "Filter bersama: Sankey, Matriks OD, dan KPI")
     with box:
         f1, f2, f3 = st.columns([3, 3, 3])
         pilihan = f1.selectbox(
-            "Provinsi fokus", [SEMUA] + prov_all, key="fl_fokus",
+            "Provinsi fokus", [SEMUA] + prov_all, key="fl_fokus", on_change=_atur_chord,
             format_func=lambda p: p if p == SEMUA or p in manca_prov
             else f"{p} (tanpa data mancanegara)",
-            help="Menyorot provinsi yang sama di Sankey, Matriks OD, dan Chord.")
+            help="Menyorot provinsi yang sama di Sankey, Matriks OD, dan Chord. Pintu di provinsi ini "
+                 "selalu ikut ditampilkan, walaupun peringkatnya di luar jumlah teratas.")
         level = f2.segmented_control(
             "Tujuan ditampilkan sebagai", [LEVEL_PINTU, LEVEL_PROV], default=LEVEL_PINTU,
             key="fl_level", help="Pintu masuk = bandara/pelabuhan/perbatasan. "
@@ -336,7 +318,8 @@ def render(load, load_sheet):
         n_tuj = int(pool["Tujuan"].nunique() if level == LEVEL_PINTU else pool["Provinsi"].nunique())
         s1, s2 = st.columns(2)
         top_n = s1.slider("Jumlah negara asal teratas", 5, n_pool, min(15, n_pool), key="fl_topn",
-                          help="Negara diurutkan menurut total kunjungan ke tujuan yang ditampilkan.")
+                          help="Negara diurutkan menurut total kunjungan ke tujuan yang ditampilkan. "
+                               "Jika provinsi fokus dipilih, negara diurutkan menurut kunjungan ke provinsi fokus.")
         top_t = s2.slider(
             "Jumlah pintu kedatangan teratas" if level == LEVEL_PINTU
             else "Jumlah provinsi tujuan teratas",
@@ -355,20 +338,37 @@ def render(load, load_sheet):
     if focus and focus not in manca_prov:
         st.info(f"{focus} bukan lokasi pintu kedatangan mancanegara pada data; "
                 "sorotan hanya berlaku pada chord.")
+    # provinsi fokus punya pintu kedatangan -> dipastikan tampil di Sankey dan Matriks OD
+    fokus_ada = bool(focus) and focus in manca_prov
 
     d = pool if not negara_pilih else pool[pool["Asal"].isin(negara_pilih)]
     d = d.assign(T=d["Tujuan"] if level == LEVEL_PINTU else d["Provinsi"])
     if pintu_pilih:
         d = d[d["Tujuan"].isin(pintu_pilih)]
     else:
-        top_tuj = d.groupby("T")["Value"].sum().nlargest(top_t).index
+        top_tuj = d.groupby("T")["Value"].sum().nlargest(top_t).index.tolist()
+        if fokus_ada:
+            # pintu milik provinsi fokus ditambahkan di luar jumlah teratas
+            tf = d[d["Provinsi"] == focus].groupby("T")["Value"].sum()
+            top_tuj = list(dict.fromkeys(top_tuj + tf[tf > 0].index.tolist()))
         d = d[d["T"].isin(top_tuj)]
     if not negara_pilih:
-        top_neg = d.groupby("Asal")["Value"].sum().nlargest(top_n).index
+        tot_neg = d.groupby("Asal")["Value"].sum()
+        if fokus_ada:
+            # negara diurutkan menurut kunjungan ke provinsi fokus dulu, baru total keseluruhan
+            ke_fokus = d[d["Provinsi"] == focus].groupby("Asal")["Value"].sum()
+            urut = pd.DataFrame({"f": ke_fokus, "t": tot_neg}).fillna(0).sort_values(
+                ["f", "t"], ascending=False)
+            top_neg = urut.head(top_n).index
+        else:
+            top_neg = tot_neg.nlargest(top_n).index
         d = d[d["Asal"].isin(top_neg)]
     agg = d.groupby(["Asal", "T"], as_index=False).agg(
         Value=("Value", "sum"), Provinsi=("Provinsi", "first"))
     focus_t = set(agg.loc[agg["Provinsi"] == focus, "T"]) if focus else set()
+    if fokus_ada:
+        st.caption(f"Fokus {focus}: pintu di {focus} selalu ditampilkan, negara asal diurutkan menurut kunjungan "
+                   f"ke {focus}, dan ambang minimum aliran tidak berlaku untuk aliran ke {focus}.")
 
     st.write("")
     kpi_row(agg, c, focus, total_m)
@@ -387,12 +387,16 @@ def render(load, load_sheet):
             chips([(BLUE, "Negara asal"), (ORANGE, "Tujuan kedatangan")]
                   + ([(VERM, f"Fokus: {focus}")] if focus_t else [])
                   + [(None, "Tebal pita = jumlah kunjungan")])
-        s_f = agg[(agg["Value"] >= min_val) & (agg["Value"] > 0)].rename(
+        # nilai 0 tetap muncul di matriks OD, tapi tidak digambar sebagai pita
+        # aliran ke provinsi fokus tidak ikut disembunyikan oleh ambang minimum
+        milik_fokus = agg["Provinsi"].eq(focus) if focus else pd.Series(False, index=agg.index)
+        s_f = agg[((agg["Value"] >= min_val) | milik_fokus) & (agg["Value"] > 0)].rename(
             columns={"Asal": "Source", "T": "Target"})
         if s_f.empty:
             st.warning("Tidak ada aliran yang memenuhi filter. Pilih negara/pintu lain atau turunkan ambang.")
         else:
             show(sankey(s_f, focus_t))
+    st.caption(CATATAN_WISMAN)
     if not s_f.empty:
         by_p = s_f.groupby("Target")["Value"].sum().sort_values(ascending=False)
         t1 = s_f.nlargest(1, "Value").iloc[0]
@@ -403,6 +407,8 @@ def render(load, load_sheet):
             "Sankey menampilkan aliran terbesar, sedangkan matriks asal-tujuan (OD) memperlihatkan seluruh "
             "pasangan, termasuk pasangan dengan kunjungan sangat rendah. Sel yang lebih terang menunjukkan "
             "jumlah kunjungan yang lebih tinggi.", GREEN)
+    st.markdown("<style>@media(max-width:700px){.js-plotly-plot .heatmaplayer text{display:none}}</style>",
+                unsafe_allow_html=True)
     with card("od"):
         cl, cr = st.columns([2, 3], vertical_alignment="center")
         skl = cl.segmented_control(
@@ -432,8 +438,8 @@ def render(load, load_sheet):
     with panel("cfilter", "Filter chord" + (f" · fokus {focus}" if focus else "")):
         c1, c2, c3, c4 = st.columns([2, 3, 2, 2], vertical_alignment="center")
         top_n_c = c1.slider("Jumlah provinsi teratas", 8, 38, 20, key="fl_cn")
-        c_min = c2.slider("Ambang minimum aliran (perjalanan)", 0, 2_000_000, 100_000, 10_000,
-                          key="fl_cmin")
+        c_min = c2.slider("Ambang minimum aliran (perjalanan)", 0, 2_000_000, 0, 10_000,
+                          key="fl_cmin", help="0 = semua aliran ditampilkan, sehingga semua provinsi asal terlihat.")
         include_self = c3.checkbox("Sertakan perjalanan dalam provinsi", value=False, key="fl_cself")
         use_sqrt = c4.checkbox("Skala akar pita", value=False, key="fl_csqrt",
                                help="Memperjelas aliran kecil. Tooltip tetap menampilkan angka asli.")
@@ -454,3 +460,4 @@ def render(load, load_sheet):
     with st.expander("Sumber data"):
         st.markdown("- " + kutip("manca", True))
         st.markdown("- " + kutip("od", True))
+        st.caption(CATATAN_WISMAN)

@@ -1,0 +1,77 @@
+Pulau,Provinsi,Jenis,Akomodasi,Kamar,TempatTidur,TPK,Lama
+Sumatera,Aceh,Bintang,62,3553,5350,25.15,1.68
+Sumatera,Aceh,Non-Bintang,503,8302,12469,17.82,1.31
+Sumatera,Sumatera Utara,Bintang,168,13570,18689,40.88,1.29
+Sumatera,Sumatera Utara,Non-Bintang,1352,29740,38679,24.4,1.09
+Sumatera,Sumatera Barat,Bintang,103,5895,8003,43.16,1.24
+Sumatera,Sumatera Barat,Non-Bintang,1042,13783,20936,16.04,1.09
+Sumatera,Riau,Bintang,110,9614,13264,44.51,1.33
+Sumatera,Riau,Non-Bintang,450,11110,15894,26.06,1.15
+Sumatera,Jambi,Bintang,43,3242,4433,48.99,1.61
+Sumatera,Jambi,Non-Bintang,179,3786,5361,20.07,1.04
+Sumatera,Sumatera Selatan,Bintang,117,9238,12940,47.24,1.35
+Sumatera,Sumatera Selatan,Non-Bintang,454,8997,13269,21.95,1.16
+Sumatera,Bengkulu,Bintang,19,1192,1800,42.74,1.23
+Sumatera,Bengkulu,Non-Bintang,254,5069,7585,17.54,1.14
+Sumatera,Lampung,Bintang,55,5008,7213,42.8,1.3
+Sumatera,Lampung,Non-Bintang,432,7733,10311,24.22,1.1
+Sumatera,Kepulauan Bangka Belitung,Bintang,59,4130,5944,25.57,1.57
+Sumatera,Kepulauan Bangka Belitung,Non-Bintang,215,3809,5132,15.26,1.3
+Sumatera,Kepulauan Riau,Bintang,119,12539,16730,48.09,1.87
+Sumatera,Kepulauan Riau,Non-Bintang,279,8247,9557,32.43,1.38
+Jawa,DKI Jakarta,Bintang,480,55092,85296,53.43,1.58
+Jawa,DKI Jakarta,Non-Bintang,460,11221,17963,41.73,1.37
+Jawa,Jawa Barat,Bintang,654,61560,90901,47.1,1.42
+Jawa,Jawa Barat,Non-Bintang,3000,55047,81417,22.64,1.09
+Jawa,Jawa Tengah,Bintang,416,35464,51975,44.42,1.35
+Jawa,Jawa Tengah,Non-Bintang,2017,39813,53013,23.2,1.06
+Jawa,DI Yogyakarta,Bintang,222,21467,31737,52.15,1.57
+Jawa,DI Yogyakarta,Non-Bintang,2069,27599,37318,23.13,1.17
+Jawa,Jawa Timur,Bintang,380,42389,60453,49.3,1.45
+Jawa,Jawa Timur,Non-Bintang,3624,57697,83001,21.85,1.1
+Jawa,Banten,Bintang,167,17426,25992,49.55,1.33
+Jawa,Banten,Non-Bintang,344,6304,8864,24.63,1.12
+Bali & Nusa Tenggara,Bali,Bintang,699,84500,106533,60.77,2.81
+Bali & Nusa Tenggara,Bali,Non-Bintang,5105,70842,93435,42.83,2.56
+Bali & Nusa Tenggara,Nusa Tenggara Barat,Bintang,171,13636,16690,40.46,1.9
+Bali & Nusa Tenggara,Nusa Tenggara Barat,Non-Bintang,1443,18626,24651,30.28,1.65
+Bali & Nusa Tenggara,Nusa Tenggara Timur,Bintang,58,5058,6839,42.49,1.72
+Bali & Nusa Tenggara,Nusa Tenggara Timur,Non-Bintang,653,11196,16552,15.99,1.44
+Kalimantan,Kalimantan Barat,Bintang,58,5283,7221,50.03,1.47
+Kalimantan,Kalimantan Barat,Non-Bintang,496,10804,14124,28.72,1.11
+Kalimantan,Kalimantan Tengah,Bintang,38,2694,4227,47.59,1.42
+Kalimantan,Kalimantan Tengah,Non-Bintang,537,10127,13919,22.48,1.09
+Kalimantan,Kalimantan Selatan,Bintang,63,5643,7963,52.8,1.43
+Kalimantan,Kalimantan Selatan,Non-Bintang,549,9528,12707,22.52,1.04
+Kalimantan,Kalimantan Timur,Bintang,70,7128,10129,53.25,1.6
+Kalimantan,Kalimantan Timur,Non-Bintang,645,12656,16831,25.4,1.24
+Kalimantan,Kalimantan Utara,Bintang,7,375,596,46.15,1.43
+Kalimantan,Kalimantan Utara,Non-Bintang,142,3218,4550,26.16,1.34
+Sulawesi,Sulawesi Utara,Bintang,67,5813,7930,44.03,1.73
+Sulawesi,Sulawesi Utara,Non-Bintang,205,4279,5377,24.76,1.5
+Sulawesi,Sulawesi Tengah,Bintang,15,1782,2523,48.14,1.59
+Sulawesi,Sulawesi Tengah,Non-Bintang,664,10345,13427,17.18,1.27
+Sulawesi,Sulawesi Selatan,Bintang,186,14431,20674,44.86,1.45
+Sulawesi,Sulawesi Selatan,Non-Bintang,875,15229,20411,18.26,1.18
+Sulawesi,Sulawesi Tenggara,Bintang,28,1992,2917,34.44,1.16
+Sulawesi,Sulawesi Tenggara,Non-Bintang,519,8676,10356,17.04,1.12
+Sulawesi,Gorontalo,Bintang,8,672,1021,38.47,1.51
+Sulawesi,Gorontalo,Non-Bintang,142,2534,3375,14.51,1.12
+Sulawesi,Sulawesi Barat,Bintang,5,375,556,26.25,1.31
+Sulawesi,Sulawesi Barat,Non-Bintang,185,2832,4007,20.02,1.06
+Maluku,Maluku,Bintang,38,2041,3235,33.48,1.85
+Maluku,Maluku,Non-Bintang,319,5640,7200,16.49,1.36
+Maluku,Maluku Utara,Bintang,22,1133,1385,42.58,1.5
+Maluku,Maluku Utara,Non-Bintang,305,5292,6176,18.53,1.23
+Papua,Papua Barat,Bintang,14,695,892,30.74,1.87
+Papua,Papua Barat,Non-Bintang,81,1533,1912,15.91,1.87
+Papua,Papua Barat Daya,Bintang,18,1473,2247,44.63,1.72
+Papua,Papua Barat Daya,Non-Bintang,139,1834,2559,13.75,1.61
+Papua,Papua,Bintang,31,2476,3507,40.89,1.83
+Papua,Papua,Non-Bintang,99,2545,3265,21.77,1.44
+Papua,Papua Selatan,Bintang,6,299,418,53.42,1.98
+Papua,Papua Selatan,Non-Bintang,40,771,957,20.08,1.46
+Papua,Papua Tengah,Bintang,12,929,1256,37.65,2.45
+Papua,Papua Tengah,Non-Bintang,72,1642,2232,27.33,1.39
+Papua,Papua Pegunungan,Bintang,2,82,152,28.5,2.12
+Papua,Papua Pegunungan,Non-Bintang,25,509,793,13.59,1.4
