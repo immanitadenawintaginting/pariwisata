@@ -133,7 +133,7 @@ def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
     custom = np.dstack([val.values, rnk.values])
     n_rank = int(np.nanmax(rnk.values))
 
-    cbar = dict(title="Kunjungan" + (" (skala log)" if log else ""), thickness=14)
+    cbar = dict(thickness=14, len=0.8, y=0.5, yanchor="middle")
     if log:
         lo, hi = int(np.ceil(z.min().min())), int(np.floor(z.max().max()))
         ticks = list(range(lo, hi + 1))
@@ -151,6 +151,9 @@ def heatmap(df: pd.DataFrame, focus_cols=(), log=True) -> go.Figure:
             fig.add_shape(type="rect", xref="x", yref="paper",
                           x0=i - 0.5, x1=i + 0.5, y0=0, y1=1,
                           line=dict(color=VERM, width=3))
+    fig.add_annotation(
+        text="Kunjungan<br>(skala log)" if log else "Kunjungan", xref="paper", yref="paper", x=1.02, y=0.9,
+        xanchor="left", yanchor="bottom", yshift=16, showarrow=False, align="left", font=dict(size=11))
     fig.update_layout(
         height=min(1000, max(640, 30 * len(rows) + 230)), margin=dict(l=8, r=8, t=56, b=6), separators=",.",
         title=judul("Matriks OD: negara asal × tujuan kedatangan",
@@ -213,6 +216,32 @@ def chord_html(df, focus, top_n, min_val, include_self, use_sqrt):
         "legend": [{"region": r, "color": REGION_COLOR[r]} for r in REGION_ORDER if r in regs],
     }
     return HTML_PATH.read_text(encoding="utf-8").replace("__DATA__", json.dumps(payload))
+
+
+OD_HTML = """<!doctype html><html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+html,body{margin:0;background:transparent;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.hint{display:none;margin:0 4px 6px;font-size:.78rem;font-weight:600;color:#64748B}
+.wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:1100px){.hint{display:block}#g{min-width:__LEBAR__px}}
+</style></head><body>
+<div class="hint">Geser ke samping untuk melihat seluruh kolom.</div>
+<div class="wrap"><div id="g"></div></div>
+<script>
+const F = __FIG__;
+F.layout.autosize = true; delete F.layout.width;
+Plotly.newPlot('g', F.data, F.layout, {responsive: true, displaylogo: false,
+  modeBarButtonsToRemove: ['select2d', 'lasso2d']});
+</script></body></html>"""
+
+
+def od_html(fig, n_kolom):
+    lebar = max(860, 44 * n_kolom + 320)
+    return (OD_HTML.replace("__LEBAR__", str(lebar))
+            .replace("__FIG__", fig.to_json().replace("</", "<\\/")))
 
 
 def top_pairs_bar(df, focus, n=10) -> go.Figure:
@@ -408,8 +437,6 @@ def render(load, load_sheet):
             "Sankey menampilkan aliran terbesar, sedangkan matriks asal-tujuan (OD) memperlihatkan seluruh "
             "pasangan, termasuk pasangan dengan kunjungan sangat rendah. Sel yang lebih terang menunjukkan "
             "jumlah kunjungan yang lebih tinggi.", GREEN)
-    st.markdown("<style>@media(max-width:700px){.js-plotly-plot .heatmaplayer text{display:none}}</style>",
-                unsafe_allow_html=True)
     with card("od"):
         cl, cr = st.columns([2, 3], vertical_alignment="center")
         skl = cl.segmented_control(
@@ -424,7 +451,9 @@ def render(load, load_sheet):
         else:
             h = agg.rename(columns={"Asal": "Y", "T": "X"})
             h["Rank"] = h["Value"].rank(ascending=False, method="min")
-            show(heatmap(h, focus_t, log=(skl == "Logaritmik")))
+            fig_od = polish(heatmap(h, focus_t, log=(skl == "Logaritmik")))
+            components.html(od_html(fig_od, int(h["X"].nunique())), height=fig_od.layout.height + 34,
+                            scrolling=False)
     tp = neg.nlargest(1, "Value").iloc[0]
     sh5 = neg.nlargest(5, "Value")["Value"].sum() / neg["Value"].sum()
     kosong = (neg["Value"] == 0).mean()
